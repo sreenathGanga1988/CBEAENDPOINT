@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+    <h2 class="form-heading">States</h2>
+ <partial name="/Views/Shared/_NotificationBox.cshtml" />
+<partial name="/Views/Shared/_ListView.cshtml" />
+
+
+
+
+
+
+
+@section Scripts {
+
+
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+    var ColumnHeader =  @Json.Serialize((Model.ColumnHeaders));
+    var Columns =  @Json.Serialize((Model.Columns));
+    var dataModels =  @Json.Serialize((Model.States));
+
+
+    var IdColumn ="id";
+    var EditAction = "/State/Edit";
+        var ViewAction = "/State/Details";
+    var DeleteAction = "/State/Delete";
+           var AddAction = "/State/Create";
+        $(document).ready(function () {
+
+            LoadData();
+            MarkasDatatable("");
+        });
+
+
+
+
+
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+

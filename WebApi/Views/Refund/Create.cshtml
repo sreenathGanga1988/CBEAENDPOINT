@@ -1,0 +1,293 @@
+﻿@model DTO.DeathClaimDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <h2 class="form-heading">Create Refund</h2>
+<hr />
+
+<form asp-action="Create">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label for="Id" id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StateId" id="lbl_StateId" class="control-label">Member </label>
+        </div>
+        <div class=" col-4">
+            <input id="DesignationId" name="staffNo" v-model="dataModel.staffNo" type="hidden" />
+            <v-select :options="members" :reduce="member => member.code" label="label"  @@search="onAllMemberSearch" v-model="dataModel.staffNo"></v-select>
+
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StateId" id="lbl_StateId" class="control-label">State </label>
+        </div>
+        <div class=" col-4">
+            <input id="StateId" name="StateId" v-model="dataModel.stateId" type="hidden" />
+            <v-select :options="states" :reduce="state => state.code" v-model="dataModel.stateId"></v-select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="hidden" />
+            @*<v-select :options="designations" :reduce="designation => designation.code" v-model="dataModel.designationId"></v-select>*@
+            <v-select :options="designations" :reduce="designation => designation.code" label="label"  @@search="onDesignationSearch" v-model="dataModel.designationId"></v-select>
+
+
+          
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Doj" id="lbl_Doj" class="control-label">Date of Death</label>
+        </div>
+        <div class=" col-4">
+            <input id="DeathDate" name="DeathDate" v-model="dataModel.deathDate" type="date" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Nominee" id="lbl_Nominee" class="control-label">Nominee</label>
+        </div>
+        <div class=" col-4">
+            <input id="Nominee" name="Nominee" v-model="dataModel.nominee" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeRelation" id="lbl_NomineeRelation" class="control-label">Nominee Relation</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="NomineeRelation" id="NomineeRelation" v-model="dataModel.nomineeRelation" class="form-control">
+                <option value="none" selected disabled hidden>
+                    Select Relation
+                </option>
+                <option value="spouse">Spouse</option>
+                <option value="father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+                <option value="sibling">Sibling</option>
+                <option value="nephew">Nephew</option>
+                <option value="niece">Niece</option>
+                <option value="grandparent">Grandparent</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeIDentity" id="lbl_NomineeIDentity" class="control-label">Nominee Identity Num</label>
+        </div>
+        <div class=" col-4">
+            <input id="NomineeIDentity" name="NomineeIDentity" v-model="dataModel.nomineeIDentity" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DDNO" id="lbl_Count" class="control-label">DD NO</label>
+        </div>
+        <div class=" col-4">
+            <input id="DDNO" name="DDNO" v-model="dataModel.dDNO" type="text" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DDDATE" id="lbl_Doj" class="control-label">DO Date</label>
+        </div>
+        <div class=" col-4">
+            <input id="DDDATE" name="DDDATE" v-model="dataModel.dDDATE" type="date" class="form-control" required />
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Amount" id="lbl_Count" class="control-label">Amount</label>
+        </div>
+        <div class=" col-4">
+            <input id="Amount" name="Amount" v-model="dataModel.amount" type="text" class="form-control" required />
+        </div>
+    </div>
+
+   
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="LastContribution" id="lbl_Count" class="control-label">Last Contribution</label>
+        </div>
+        <div class=" col-4">
+            <input id="LastContribution" name="LastContribution" v-model="dataModel.lastContribution" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+     
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.GetDesignationDropDowns();
+                this.GetStateDropDowns();               
+               // this.GetBranchDropDowns();
+                this.GenerateDropDowns('ALLMEMBER', "")
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                designations: [],
+                states: [],
+                yearOFs: [],
+                members: [],
+                function() {
+                    return {
+                        appMessage: 'ClaimCount',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                 
+                    if (!this.dataModel.staffNo) {
+                        this.errors.push(" StaffNo required.");
+                    } if (!this.dataModel.stateId) {
+                        this.errors.push(" State required.");
+                    }
+                    if (!this.dataModel.designationId) {
+                        this.errors.push(" Designation required.");
+                    }
+                    if (!this.dataModel.nominee) {
+                        this.errors.push(" Nominee required.");
+                    }
+                    if (!this.dataModel.dDNO) {
+                        this.errors.push(" DDNO required.");
+                    }
+                    if (!this.dataModel.amount) {
+                        this.errors.push(" Amount required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,          
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+                GetDesignationDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'DESIGNATION');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.designations = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                GetStateDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'STATE');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.states = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                //GetMemberDropDowns: function (search) {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', 'MEMBER');
+                //    bodyFormData.append('q', search);
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+                //            this.members = response.data.items;
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+
+                //onMemeberSearch(search, loading) {
+
+                //    this.GetMemberDropDowns(search)
+
+
+                //},
+
+             
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

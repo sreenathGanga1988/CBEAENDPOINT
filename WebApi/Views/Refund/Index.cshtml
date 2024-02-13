@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+    <h2 class="form-heading">Contribution Refunds</h2>
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+<partial name="/Views/Shared/_ListView.cshtml" />
+
+
+
+<div>
+    <a href="~/MainPage" class="BacktoList"> &laquo; Back to Mainpage</a>
+</div>
+
+
+
+@section Scripts {
+
+
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+    var ColumnHeader =  @Json.Serialize((Model.ColumnHeaders));
+    var Columns =  @Json.Serialize((Model.Columns));
+    var dataModels =  @Json.Serialize((Model.DeathClaimDTOs));
+
+
+    var IdColumn ="id";
+        var EditAction = "/DeathClaim/Edit";
+        var ViewAction = "/DeathClaim/Details";
+        var DeleteAction = "/DeathClaim/Delete";
+        var AddAction = "/DeathClaim/Create";
+        $(document).ready(function () {
+
+            LoadData();
+            MarkasDatatable("");
+        });
+
+
+
+
+
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+

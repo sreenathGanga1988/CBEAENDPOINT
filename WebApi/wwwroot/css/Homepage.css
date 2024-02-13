@@ -1,0 +1,200 @@
+﻿html, body {
+    height: auto;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+nav {
+    background-color: #2e618c;
+}
+.main-menu .navigation > li{
+    position: relative;
+    float: left;
+    padding: 8px 2px;
+    margin-right: 2px;
+    border-right: 2px solid #27a0ce;
+}
+.nav-item a:hover {
+    color: orange !important;
+    
+}
+
+.news {
+    border-radius: 5px;
+    background-color: #ffc430;
+}
+.news-heading{
+    padding-top:20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+.form-heading {
+    text-align: center;
+    color: white;
+    background-color: #2e618c;
+    text-shadow: 2px 2px 4px #000000;
+    box-shadow: 8px 8px 3px grey;
+    padding-bottom: 10px;
+}
+
+.footer {
+    background-color: #2e618c;
+    color: white !important;
+}
+
+.mbr-section-full {
+    display: table;
+    height: 40vh;
+    padding-bottom: 0;
+    padding-top: 0;
+    table-layout: fixed;
+    width: 100%;
+    background-size:cover;
+}
+.container-fluid-slide {
+    padding-left: 10px;
+    padding-right:10px;
+    background-size: cover;
+}
+.carousel-inner {
+    min-height: 300px;
+}
+
+
+
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+news and main text style flex
+*/
+
+.parent {
+    min-height: 300px;
+    margin: 0 auto;
+    display: -webkit-flex; /* Safari */
+    display: flex; /* Standard syntax */
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.child {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffc430;
+    -webkit-flex: 1; /* Safari */
+    -ms-flex: 1; /* IE 10 */
+    flex: 1; /* Standard syntax */
+}
+
+/* Main column */
+.child1 {
+    background: #ffff;
+    flex-basis: 70%;
+}
+.margin-maintext {
+    margin: 15px;
+}
+
+.news-margin {
+    margin: 10px;
+    border-bottom: 2px solid #fbf07b;
+}
+.main-text {
+    /*border: 1px solid black;
+    border-radius: 5px;*/
+    font-size: 16px;
+    line-height: 2.2rem;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+
+    .parent {
+        display: block !important;
+        width: auto;
+    }
+   
+    
+    
+    /*.carousel {
+        min-height: 500px;
+    }*/
+   
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+
+    
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+   
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .mbr-section-full {
+        display: table;
+        height: 60vh;
+        padding-bottom: 0;
+        padding-top: 0;
+        table-layout: fixed;
+        width: 100%;
+        background-size: cover;
+    }
+
+    }
+
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Custom media queries
+*/
+
+/* Set width to make card deck cards 100% width */
+@media (max-width: 950px) {
+
+   
+    .parent{
+        display:block !important;
+        width:auto;
+    }
+   
+}
+
+.carousel {
+    /* 
+    border-radius: 800px 800px 800px 800px;*/
+    overflow: hidden;
+}
+
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+        LOGO - Index, Layout nav
+*/
+
+/* Extra large devices (large desktops, 765px and up) logo display*/
+@media (min-width: 765px) {
+
+    .smallscreen {
+        display: none;
+    }
+    /*  .nav-cbeu {
+        display: none;
+    }
+    .nav-aibea {
+        display: none;
+    }*/
+   
+}
+/* Extra large devices (small desktops, 764px and down) logo display */
+@media (max-width: 764px) {
+
+    .largescreen {
+        display: none;
+    }
+  
+} 

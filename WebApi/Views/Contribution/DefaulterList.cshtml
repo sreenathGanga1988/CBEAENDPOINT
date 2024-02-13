@@ -1,0 +1,139 @@
+﻿
+<h1>@ViewData["msghead"]</h1>
+
+
+<div id="showData">
+
+</div>
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                
+                this.ShowData();
+            },
+            data: {
+                dataModel: null,
+
+
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+
+
+                ShowData: function () {
+                    $.blockUI();
+
+
+                    axios.get('/Contribution/ContriReportsData?type= Defaulter'+ '&id=0').then(response => {
+                        if (response.data.items.length > 0) {
+                            var k = JSON.parse(response.data.items);
+                            fillData(k,"");
+                        }
+                        $.unblockUI();
+                       
+                    });
+                },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+
+        });
+
+
+
+
+
+
+        function fillData(result,type) {
+            if ($.fn.DataTable.isDataTable('#dynamictable')) {
+                $('#dynamictable').DataTable().destroy();
+            }
+
+            $('#dynamictable').empty();
+            var myData = result;
+            if (myData.length > 0) {
+                var col = [];
+                col = Object.keys(myData[0]);
+                console.log(col);
+                let table = '<table id="dynamictable" class="table table-responsive table-condensed"><thead>';
+                table = table + '<tr>';
+                let Allth = "";
+                for (let i = 0; i < col.length; i++) {
+                    let str = col[i].toString();
+                    str = str.substring(str.indexOf("_") + 1);
+                    let th = '<th>' + str + '</th>';
+                    Allth = Allth + th;
+                }
+                Allth = Allth + '';
+                table = table + Allth + '</tr></thead><tbody>';
+                let rowhtml = ""
+                for (let i = 0; i < myData.length; i++) {
+                    rowhtml = rowhtml + '<tr>';
+                    let colCount = col.length;
+                    let Alltd = "";
+                    for (let j = 0; j < colCount; j++) {
+                        let colname = col[j].toString();
+                        let colvalue = myData[i][colname];
+                        let td = '<td>' + colvalue + '</td>';
+                        Alltd = Alltd + td;
+                    }
+                    rowhtml = rowhtml + Alltd;
+                    rowhtml = rowhtml + "</tr>";
+                   
+
+                  
+                }
+
+                rowhtml = rowhtml + '</tbody>';
+
+                table = table + rowhtml + '</table>';
+
+                var divContainer = document.getElementById("showData");
+                divContainer.innerHTML = table;
+
+                $('#dynamictable').dataTable({
+
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            }
+            else {
+
+            }
+
+        }
+    </script>
+
+}
+
+

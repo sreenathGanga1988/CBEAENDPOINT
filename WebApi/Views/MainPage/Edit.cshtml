@@ -1,0 +1,262 @@
+﻿@model DTO.MainPageDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h2 class="form-heading">Edit Main page</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+
+    <div class="row justify-content-center">
+
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Slogan" id="lbl_Slogan" class="control-label">Slogan</label>
+        </div>
+        <div class=" col-4">
+            <input id="Slogan" name="Slogan" v-model="dataModel.slogan" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DayQuote" id="lbl_DayQuote" class="control-label"> Default Day Quote</label>
+        </div>
+        <div class=" col-4">
+            <input id="DayQuote" name="DayQuote" v-model="dataModel.dayQuote" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CorouselImage1" id="lbl_CorouselImage1" class="control-label">Corousel Image1</label>
+        </div>
+        <div class=" col-4">
+            <input id="CorouselImage1" name="CorouselImage1" v-model="dataModel.corouselImage1" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CorouselImage2" id="lbl_CorouselImage2" class="control-label">Corousel Image2</label>
+        </div>
+        <div class=" col-4">
+            <input id="CorouselImage2" name="CorouselImage2" v-model="dataModel.corouselImage2" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CorouselImage3" id="lbl_CorouselImage3" class="control-label">Corousel Image3</label>
+        </div>
+        <div class=" col-4">
+            <input id="CorouselImage3" name="CorouselImage3" v-model="dataModel.corouselImage3" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="MainText" id="lbl_MainText" class="control-label">MainPage Text</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="MainText" name="MainText" v-model="dataModel.mainText" type="text" cols="15" rows="10" class="form-control" required></textarea>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="RulesRegulation" id="lbl_RulesRegulation" class="control-label">Rules & Regulation</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="RulesRegulation" name="RulesRegulation" v-model="dataModel.rulesRegulation" type="text" cols="15" rows="10" class="form-control" required></textarea>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="LogoImage1" id="lbl_LogoImage1" class="control-label">Logo Image1</label>
+        </div>
+        <div class=" col-4">
+            <input id="LogoImage1" name="LogoImage1" v-model="dataModel.logoImage1" type="text" required class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="LogoImage2" id="lbl_LogoImage2" class="control-label">Logo Image2</label>
+        </div>
+        <div class=" col-4">
+            <input id="LogoImage2" name="LogoImage2" v-model="dataModel.logoImage2" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ContactDesc1" id="lbl_ContactDesc1" class="control-label">Contact Description1 </label>
+        </div>
+        <div class=" col-4">
+            <textarea id="ContactDesc1" name="ContactDesc1" v-model="dataModel.contactDesc1" type="text" class="form-control" required></textarea>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ContactDesc2" id="lbl_ContactDesc2" class="control-label">Contact Description2</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="ContactDesc2" name="ContactDesc2" v-model="dataModel.contactDesc2" type="text" class="form-control" required></textarea>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ContactLine1" id="lbl_ContactLine1" class="control-label">Contact Line1</label>
+        </div>
+        <div class=" col-4">
+            <input id="ContactLine1" name="ContactLine1" v-model="dataModel.contactLine1" type="text" required class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ContactLine2" id="lbl_ContactLine2" class="control-label">Contact Line2</label>
+        </div>
+        <div class=" col-4">
+            <input id="ContactLine2" name="ContactLine2" v-model="dataModel.contactLine2" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ContactLine3" id="lbl_ContactLine3" class="control-label">Contact Line3</label>
+        </div>
+        <div class=" col-4">
+            <input id="ContactLine3" name="ContactLine3" v-model="dataModel.contactLine3" type="text" required class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Phonenum" id="lbl_Phonenum" class="control-label">Phone number</label>
+        </div>
+        <div class=" col-4">
+            <input id="Phonenum" name="Phonenum" v-model="dataModel.phonenum" type="number" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Faxnum" id="lbl_Faxnum" class="control-label">Fax number</label>
+        </div>
+        <div class=" col-4">
+            <input id="Faxnum" name="Faxnum" v-model="dataModel.faxnum" type="number" required class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Website" id="lbl_Website" class="control-label">Website</label>
+        </div>
+        <div class=" col-4">
+            <input id="Website" name="Website" v-model="dataModel.website" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Email" id="lbl_Email" class="control-label"> Email</label>
+        </div>
+        <div class=" col-4">
+            <input id="Email" name="Email" v-model="dataModel.email" type="email" required class="form-control" />
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr/>
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                       appMessage: 'Mainpage',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("MainPage Id is required.");
+                    }
+                    if (!this.dataModel.slogan) {
+                        this.errors.push(" MainPage Slogan required.");
+                    }
+                    if (!this.dataModel.dayQuote) {
+                        this.errors.push(" MainPage DayQuote required.");
+                    }
+                    if (!this.dataModel.mainText) {
+                        this.errors.push(" MainPage text description required.");
+                    }
+                    if (!this.dataModel.corouselImage1) {
+                        this.errors.push(" MainPage image1 required.");
+                    }
+                    if (!this.dataModel.corouselImage2) {
+                        this.errors.push(" MainPage image2 required.");
+                    }
+                    if (!this.dataModel.corouselImage3) {
+                        this.errors.push(" MainPage image3 required.");
+                    }
+                    if (!this.dataModel.rulesRegulation) {
+                        this.errors.push(" Rules & Regulation required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

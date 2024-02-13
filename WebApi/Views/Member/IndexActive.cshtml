@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h2 class="form-heading">Members</h2>
+<p><a href="/Member/Index" id="Dayquote-btn" class="button sub-button">All Members</a></p>
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+<p>
+    <a href="/Member/Create" id="addbtn" class="btn btn-primary "><i class="material-icons" style="color :white">create_new_folder</i> Create New </a>
+
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <table id="test-registers" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Staff No
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Gender
+                    </th>
+                    <th>
+                        Designation
+                    </th>
+                   
+                    <th>
+                        Status
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/lib/datetime-moment/datetime-moment.js"></script>
+    <script>
+
+        var table;
+
+        $(document).ready(function () {
+            $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+            $.fn.dataTable.moment("DD/MM/YYYY");
+           
+            table = $("#test-registers").DataTable({
+                // Design Assets
+                stateSave: true,
+                autoWidth: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+                searching: { regex: true },
+                // Ajax Filter
+                ajax: {
+                    url: "/api/DataTable/AddCustomer",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        d.listtype = "ACTIVEMEMBER";
+                        return JSON.stringify(d);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    { data: "id" },
+                    { data: "staffNo" },
+                    { data: "name" },
+                    { data: "gender_text" },
+                    { data: "designation_text" },
+                    { data: "status_text" },
+                    {
+                        data: "creationDate",
+                        render: function (data, type, row) {
+                         
+                            let k = ' <a  href="/Member/Details/' + row["staffNo"]+'" style="padding:10px"><i class="material-icons" style="color :blue">preview</i> </a> \
+                                      <a href="/Member/Edit/' + row["staffNo"] +'" style="padding:10px" > <i class="material-icons" style="color :blue">edit</i> </a> \
+                                      <a href="/Member/Delete/' + row["staffNo"] + '" style="padding:10px"><i class="material-icons" style="color :red">delete</i> </a> \
+                                     <a href="/Member/MemberReport/' + row["staffNo"] +'" style = "padding:10px" > <i class="material-icons" style="color :green">summarize</i> </a > ';
+
+                            return k;
+                        }
+                    }
+                    // {
+                    //    data: "creationDate",
+                    //    render: function (data, type, row) {
+                    //        // If display or filter data is requested, format the date
+                    //        if (type === "display" || type === "filter") {
+                    //            return moment(data).format("ddd DD/MM/YYYY HH:mm:ss");
+                    //        }
+                    //        // Otherwise the data type requested (`type`) is type detection or
+                    //        // sorting data, for which we want to use the raw date value, so just return
+                    //        // that, unaltered
+                    //        let k = ' <a  href="/UserType/Details/1" style="padding:10px"><i class="material-icons" style="color :blue">preview</i> </a>' +
+                    //            ' < a href="/UserType/Edit/1" style="padding:10px" > <i class="material-icons" style="color :blue">edit</i> </a> ' +
+                    //            '<a href="/UserType/Delete/1" style="padding:10px"><i class="material-icons" style="color :red">delete</i> </a>
+                    //        return data;
+                    //    }
+                    //}
+                ],
+                // Column Definitions
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+
+                            return data;
+                        }
+                    },
+                    
+                ]
+            });
+        });
+
+        function strtrunc(str, num) {
+            if (str.length > num) {
+                return str.slice(0, num) + "...";
+            }
+            else {
+                return str;
+            }
+        }
+
+        function edit(rowContext) {
+            if (table) {
+                var data = table.row($(rowContext).parents("tr")).data();
+                alert("Example showing row edit with id: " + data["id"] + ", name: " + data["name"]);
+            }
+        }
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

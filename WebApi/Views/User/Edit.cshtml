@@ -1,0 +1,237 @@
+﻿@model DTO.UserDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <h2 class="form-heading">Edit User</h2>
+<hr />
+
+<form asp-action="Edit">
+
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+    <input type="hidden" asp-for="AddedUser" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UserName" id="lbl_UserName" class="control-label">User Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="UserName" name="UserName" v-model="dataModel.userName" type="text" maxlength="50" required readonly class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Password" id="lbl_Password" class="control-label">Password</label>
+        </div>
+        <div class=" col-4">
+            <input id="Password" name="Password" v-model="dataModel.password" type="Password" maxlength="100" class="form-control" required readonly />
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="EmailId" id="lbl_EmailId" class="control-label">Email Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="EmailId" name="EmailId" v-model="dataModel.emailId" type="email" maxlength="100" class="form-control"  />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="PhoneNum" id="lbl_PhoneNum" class="control-label">Phone Num</label>
+        </div>
+        <div class=" col-4">
+            <input id="PhoneNum" name="PhoneNum" v-model="dataModel.phoneNum" type="text" maxlength="100" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UserTypeId" id="lbl_UserTypeId" class="control-label">UserTypeId</label>
+        </div>
+        <div class=" col-4">
+            <input type="hidden" v-model="dataModel.userTypeId" name="UserTypeId" />
+            <v-select :options="usertypes" :reduce="usertype => usertype.code" v-model="dataModel.userTypeId"></v-select>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="EmployeeId" id="lbl_EmployeeId" class="control-label">Staff No</label>
+        </div>
+        <div class=" col-4">
+            <input id="EmployeeId" name="EmployeeId" v-model="dataModel.employeeId" type="hidden" />
+
+            <v-select :options="members" :reduce="member => member.code" label="label"  @@search="onAllMemberSearch" v-model="dataModel.employeeId"></v-select>
+
+            @*<v-select :options="employeeIds" :reduce="employeeId => employeeId.code" v-model="dataModel.employeeId"></v-select>*@
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group form-check col-4">
+
+
+            <input type="checkbox" id="IsActive" name="IsActive" v-model="dataModel.isActive">
+            <label for="checkbox">Active ??</label>
+
+
+        </div>
+
+        <div class="form-group form-check col-4">
+
+
+
+
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.GetEmployeeIdDropDowns();
+                this.GetUserTypeDropDowns();
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                usertypes: [],
+                members: [],
+                function() {
+                    return {
+                       appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("User Id is required.");
+                    }
+                    if (!this.dataModel.userName) {
+                        this.errors.push(" User Name required.");
+                    }
+                    if (!this.dataModel.password) {
+                        this.errors.push(" Password required.");
+                    }
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+               
+
+                GetEmployeeIdDropDowns: function () {
+
+                    this.onAllMemberSearchSelected('MEMBER', '', this.dataModel.employeeId)
+
+                    //var bodyFormData = new FormData();
+                    //bodyFormData.append('listType', 'MEMBER');
+                    //axios({
+                    //    method: 'post',
+                    //    url: '/api/data/',
+                    //    data: bodyFormData,
+                    //    headers: { 'Content-Type': 'multipart/form-data' }
+                    //})
+                    //    .then(function (response) {
+                    //        //handle success
+
+                    //        this.employeeIds = response.data.items;
+                    //        this.SetSelectedEmployeeId();
+                    //    }.bind(this))
+                    //    .catch(function (response) {
+                    //        //handle error
+
+                    //        console.log(response);
+                    //    });
+                },
+
+                GetUserTypeDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'USERTYPE');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.usertypes = response.data.items;
+                            this.SetSelectedUserType();
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                SetSelectedUserType: function () {
+
+                    this.dataModel.userTypeId = this.usertypes.find(item => item.code == this.dataModel.userTypeId)
+
+                    this.dataModel.userTypeId = this.dataModel.userTypeId.code
+
+                },
+                SetSelectedEmployeeId: function () {
+
+                    this.dataModel.employeeId = this.members.find(item => item.code == this.dataModel.employeeId)
+
+                    this.dataModel.employeeId = this.dataModel.employeeId.code
+
+                },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

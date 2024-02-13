@@ -1,0 +1,79 @@
+﻿
+@{ ViewData["Title"] = "Index"; }
+
+@section Styles{
+
+
+
+}
+
+<h2 class="form-heading">Main Page</h2>
+
+
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+<a href="/ManagingComitee/" id="Dayquote-btn" class="button sub-button">Managing Committee</a>
+
+<a href="/NewsItem/" id="newspage-btn" class="button sub-button"> News Item</a>
+
+<a href="/DayQuote/" id="Dayquote-btn" class="button sub-button"> Day Quote </a>
+
+@*<a href="/ClaimCount/" id="Dayquote-btn" class="button sub-button"> Claim Count</a>*@
+
+<a href="/FileUploadDetail/" id="Dayquote-btn" class="button sub-button"> File Upload</a>
+
+
+
+<hr />
+
+<partial name="/Views/Shared/_ListView.cshtml" />
+
+
+@section Scripts {
+
+
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+    var ColumnHeader =  @Json.Serialize((Model.ColumnHeaders));
+    var Columns =  @Json.Serialize((Model.Columns));
+    var dataModels =  @Json.Serialize((Model.MainPages));
+
+
+    var IdColumn ="id";
+    var EditAction = "/MainPage/Edit";
+        var ViewAction = "/MainPage/Details";
+    var DeleteAction = "/MainPage/Delete";
+           var AddAction = "/MainPage/Create";
+        $(document).ready(function () {
+
+            LoadData();
+            MarkasDatatable("");
+        });
+
+
+
+
+
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+

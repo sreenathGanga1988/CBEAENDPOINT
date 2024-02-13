@@ -1,0 +1,134 @@
+﻿@model MainPageModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+@section Styles{
+
+    <style>
+        body {
+            background-color: #b8d6e2 !important;
+        }
+
+        .contact {
+            padding: 5%;
+        }
+
+        .col-md-5 {
+            background: #2e618c;
+            color: white;
+            padding: 4%;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        .contact-info {
+            margin-top: 10%;
+        }
+
+            .contact-info img {
+                margin-bottom: 15%;
+            }
+
+            .contact-info h2 {
+                margin-bottom: 10%;
+            }
+
+        .col-md-7 {
+            background: #fff;
+            padding: 3%;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        .contact-form label {
+            font-weight: 600;
+        }
+
+        .contact-form button {
+            background: #2e618c;
+            color: #fff;
+            font-weight: 600;
+            width: 25%;
+        }
+
+            .contact-form button:focus {
+                box-shadow: none;
+            }
+
+        h3 {
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        h5 {
+            font-size: 15px;
+        }
+
+        .small-text {
+            font-size: 12px;
+        }
+    </style>
+
+
+
+}
+<div class="container contact">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="contact-info">
+                <img src="~/images/contact.png" alt="image" />
+                <h3>Contact Us</h3>
+
+                <h5> @Model.ContactDesc1</h5>
+                <span class="small-text"> @Model.ContactDesc2</span>
+                <hr />
+                <p>@Model.ContactLine1</p>
+                <p>@Model.ContactLine2</p>
+                <p>@Model.ContactLine3</p>
+                <hr />
+                <p>Ph:@Model.Phonenum,@Model.Faxnum</p>
+                <p> Email id : @Model.Email </p>
+                <p> website:@Model.Website</p>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="contact-form">
+                <form action="mailto:cbeutvm@gmail.com">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="fname">First Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="lname">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Email:</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="comment">Comment:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

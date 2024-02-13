@@ -1,0 +1,211 @@
+﻿
+
+<h2 class="form-heading">New File Upload</h2>
+<hr />
+
+<form method="post" enctype="multipart/form-data" asp-controller="Contribution" asp-action="FileUpload">
+
+
+    <div class="form-group row">
+        <label for="Year" class="col-4 col-form-label">Year</label>
+        <div class="col-6">
+
+
+            <input type="hidden" id="Year" name="Year"  v-model="year" />
+            <v-select :options="years" :reduce="year => year.code"  v-model="year"></v-select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="select" class="col-4 col-form-label">Select</label>
+        <div class="col-6">
+
+            <input type="hidden" id="Month" name="Month"  v-model="month" />
+            <v-select :options="months" :reduce="month => month.code"  v-model="month"></v-select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="select" class="col-4 col-form-label">Upload Files</label>
+        <div class="col-6">
+
+            <input type="file" class="form-control-file" id="postedFiles" name="postedFiles">
+
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class=" col-sm-12 text-center">
+
+            <button name="submit" type="submit" class="btn btn-primary">Upload</button>
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+    </div>
+
+    <br />
+    <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+</form>
+@if (Model != null)
+{
+
+    <table class="table table-bordered">
+        <thead><tr><th>Total Contribution</th><th>Total Entry</th><th>New Member</th></tr></thead>
+        <tbody><tr><th>@Model.totalamount</th><th>@Model.totalentry</th><th>@Model.NewMemberCount</th></tr></tbody>
+    </table>
+
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>staffno</th>
+                <th>Name</th>
+                <th>Amount</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.ContributionDetails != null)
+            {
+                foreach (var item in Model.ContributionDetails)
+                {
+                    <tr>
+                        <td>
+                            @item.StaffNo
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Contribution
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+}
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+
+@section Scripts {
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.GetMonthDropDowns();
+
+                this.GetYearDropDowns();
+            },
+            data: {
+                years: [],
+                months: [],
+                totalentry: 0,
+                totalamount: 0,
+                datatab: null,
+                dataModel: null,
+                year: 0,
+                month: 0,
+                circle: 0,
+                member: 0,
+                branch: 0,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.year) {
+                        this.errors.push("Category Id is required.");
+                    }
+                    if (!this.dataModel.month) {
+                        this.errors.push(" Category Name required.");
+                    }
+                   if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+
+
+                GetMonthDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MONTH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.months = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                GetYearDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'YEAR');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.years = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+
+
+
+
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    
+
+
+
+}

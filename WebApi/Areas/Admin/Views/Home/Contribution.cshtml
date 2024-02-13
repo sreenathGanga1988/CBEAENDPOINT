@@ -1,0 +1,201 @@
+﻿@{ ViewData["Title"] = "Index"; }
+@section Styles{
+    <style>
+    </style>
+
+
+}
+
+
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+<h2 class="form-heading">Total Contribution</h2>
+<button class="btn btn-info" onclick="ExportToExcel('xlsx')">Export Report to excel</button>
+
+<div class="table-responsive">
+    <table id="tvlContributiondata" class="table table-condensed w-auto small">
+        <thead>
+            <tr style=" background-color: #c5c5c7b0;align-content:center;align-items:center">
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" rowspan="2">Year</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Jan</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Feb</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Mar</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Apr</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>May</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Jun</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Jul</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Aug</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Sep</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Oct</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Nov</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" colspan=2>Dec</th>
+                <th style="border-left: 1px solid #17202A;" class="text-center" align="center" rowspan="2">Total</th>
+
+            </tr>
+            <tr style="background-color: #c5c5c7b0;align-content: center;align-items: center">
+
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th>Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+                <th style="border-left: 1px solid #17202A;">Employee</th>
+                <th>Amount </th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr v-for="item in dataModel">
+                <td style=" background-color: #c5c5c7b0;align-content:center;align-items:center;font-weight :bold">{{item.Year}}</td>
+                <td style="border-left: 1px solid double;">{{item.Member_1}}</td>
+                <td>{{item.Amount_1}}</td>
+                <td style="        border-left: 1px solid #17202A;">{{item.Member_2}}</td>
+                <td>{{item.Amount_2}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_3}}</td>
+                <td>{{item.Amount_3}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_4}}</td>
+                <td>{{item.Amount_5}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_5}}</td>
+                <td>{{item.Amount_4}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_6}}</td>
+                <td>{{item.Amount_6}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_7}}</td>
+                <td>{{item.Amount_7}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_8}}</td>
+                <td>{{item.Amount_8}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_9}}</td>
+                <td>{{item.Amount_9}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_10}}</td>
+                <td>{{item.Amount_10}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_11}}</td>
+                <td>{{item.Amount_11}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.Member_12}}</td>
+                <td>{{item.Amount_12}}</td>
+                <td style="border-left: 1px solid #17202A;">{{item.TotalYearAmount}}</td>
+            </tr>
+
+            <tr>
+
+                <th colspan="25" style=" align-content:center;align-items:center"> Total : </th>
+                <th style=" align-content:center;align-items:center">0</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div id="showData">
+
+</div>
+
+<hr />
+
+
+
+
+@section Scripts {
+
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.ShowData();
+            },
+            data: {
+
+                datatab: null,
+                dataModel: null,
+
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+
+
+                ShowData: function () {
+                    $.blockUI();
+                    this.dataModel = null;
+
+                    axios.get('/Admin/Report/GetOverAllContribution').then(response => {
+
+
+
+                        if (response.data.items.length > 0) {
+                            var itemsdata = JSON.parse(response.data.items);
+                            this.dataModel = JSON.parse(itemsdata.items);
+                            //document.title = itemsdata.reportname;
+                            //fillData(k, itemsdata.reportname);
+                        }
+                        else {
+                            ShowInfoNotification("No Data Available !!");
+                        }
+                        //this.dataModel = response.data.items;
+                        //this.totalentry = this.dataModel.length;
+                        //if (this.totalentry > 0) {
+
+                        //    this.totalamount = this.dataModel.map(item => item.amount).reduce((total, amount) => eval(total) + eval(amount));
+                        //}
+                        // this.initDatatable();
+                        $.unblockUI();
+                        console.log(this.dataModel);
+                    });
+
+                },
+
+
+
+
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    <script>
+        $(document).ready(function () {
+
+
+        });
+
+
+
+        function ExportToExcel(type, fn, dl) {
+            var elt = document.getElementById('tvlContributiondata');
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+        }
+
+        
+    </script>
+
+}

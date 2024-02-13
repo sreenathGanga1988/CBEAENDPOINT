@@ -1,0 +1,199 @@
+﻿@model DTO.ClaimCountDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <h2 class="form-heading">Create Claim Count</h2>
+<hr />
+
+<form asp-action="Create">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label for="Id" id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StateId" id="lbl_StateId" class="control-label">State </label>
+        </div>
+        <div class=" col-4">
+            <input id="StateId" name="StateId" v-model="dataModel.stateId" type="hidden" />
+            <v-select :options="states" :reduce="state => state.code" v-model="dataModel.stateId"></v-select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="hidden" />
+            <v-select :options="designations" :reduce="designation => designation.code" v-model="dataModel.designationId"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="YearOF" id="lbl_YearOF" class="control-label">Year</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="YearOF" name="YearOF" v-model="dataModel.yearOF" type="hidden" />
+            <v-select :options="yearOFs" :reduce="yearOF => yearOF.code" v-model="dataModel.yearOF"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Count" id="lbl_Count" class="control-label">Count</label>
+        </div>
+        <div class=" col-4">
+            <input id="Count" name="Count" v-model="dataModel.count" type="number" class="form-control" required />
+        </div>
+    </div>
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+     
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.GetDesignationDropDowns();
+                this.GetYearDropDowns();
+                this.GetStateDropDowns();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                designations: [],
+                states: [],
+                yearOFs: [],
+                function() {
+                    return {
+                        appMessage: 'ClaimCount',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                 
+                    if (!this.dataModel.stateId) {
+                        this.errors.push(" State required.");
+                    }
+                    if (!this.dataModel.designationId) {
+                        this.errors.push(" Designation required.");
+                    }
+                    if (!this.dataModel.yearOF) {
+                        this.errors.push(" Year required.");
+                    }
+                    if (!this.dataModel.count) {
+                        this.errors.push(" Count required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,          
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+                GetDesignationDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'DESIGNATION');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.designations = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                GetStateDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'STATE');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.states = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                GetYearDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'YEAR');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.yearOFs = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

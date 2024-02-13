@@ -1,0 +1,115 @@
+﻿@model DTO.DesignationDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="form-heading">Edit Designation</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate"/>
+    <input type="hidden" asp-for="CreatedByUserId" />
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Designation Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text"  maxlength="150" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description" id="lbl_Description" class="control-label">Designation Description</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description" name="Description" v-model="dataModel.description" type="text"  maxlength="250" class="form-control" />
+        </div>
+
+    </div>
+
+
+
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Designation',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("Designation Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Designation Name required.");
+                    }
+                    if (!this.dataModel.description) {
+                        this.errors.push(" Designation description required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

@@ -1,0 +1,214 @@
+﻿@model DTO.ProfileDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+        <h2 class="form-heading">Member Report</h2>
+        <hr />
+
+        <form>
+
+            <div class="row justify-content-center">
+
+                <div class="col">
+                    <label id="lbl_Id" class="control-label"><b>Id : </b></label>
+
+                    <label>@Model.Id</label>
+                </div>
+
+
+                <div class="col">
+                    <label for="Name" id="lbl_Name" class="control-label"><b>Name : </b></label>
+
+                    <label>@Model.Name.ToString()</label>
+                </div>
+
+                <div class="col">
+                    <label for="StaffNo" id="lbl_StaffNo" class="control-label"><b>Staff No : </b></label>
+                    <label>@Model.StaffNo.ToString()</label>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="row justify-content-center">
+
+
+                <div class="col">
+                    <label for="GenderId" id="lbl_GenderId" class="control-label"><b>Gender : </b></label>
+                    <label> @Model.Gender_text.ToString()</label>
+                </div>
+                <div class="col">
+                    <label for="Dob" id="lbl_Dob" class="control-label"><b>Dob :</b></label>
+                    <label>
+                        @if (Model.Dob.HasValue)
+                        {
+                            @Html.Raw(DateTime.Parse(Model.Dob.ToString()).ToString(" dd MMMM yyyy"));
+                        }
+                        else
+                        {
+                            Html.Raw("Details not available");
+                        }
+                    </label>
+                </div>
+                <div class="col">
+                    <label for="category_text" id="lbl_category_text" class="control-label"><b>Category: </b></label>
+                    <label> @Model.Category_text</label>
+                </div>
+
+            </div>
+
+
+            <div class="row justify-content-center">
+
+                <div class="col">
+                    <label for="DpCode" id="lbl_DpCode" class="control-label"><b>DpCode : </b></label>
+                    <label>@Model.DpCode</label>
+                </div>
+                <div class="col">
+                    <label for="designation_text" id="lbl_designation_text" class="control-label"><b>Designation : </b></label>
+                    <label>@Model.Designation_text</label>
+                </div>
+                <div class="col">
+                    <label for="Doj" id="lbl_Doj" class="control-label"><b>Date of joining : </b></label>
+                    <label>
+                        @if (Model.Doj.HasValue)
+                        {
+
+                            @Html.Raw(DateTime.Parse(Model.Doj.ToString()).ToString(" dd MMMM yyyy"));
+                        }
+                        else
+                        {
+                            Html.Raw("Details not available");
+                        }
+                    </label>
+                </div>
+
+            </div>
+
+
+            <div class="row justify-content-center">
+
+                <div class="col">
+                    <label for="DojtoScheme" id="lbl_DojtoScheme" class="control-label"><b>Date of joining to Scheme : </b></label>
+                    <label>
+                        @if (Model.DojtoScheme.HasValue)
+                        {
+                            @Html.Raw(DateTime.Parse(Model.DojtoScheme.ToString()).ToString(" dd MMMM yyyy"));
+
+                        }
+                        else
+                        {
+                            Html.Raw("Details not available");
+                        }
+                    </label>
+                </div>
+                <div class="col">
+                    <label for="StatusId" id="lbl_StatusId" class="control-label"><b>Status :</b></label>
+                    <label>@Model.Status_text</label>
+
+                </div>
+                <div class="col">
+
+                </div>
+
+            </div>
+
+
+
+            <hr />
+
+           
+
+                <h3>Contributions</h3>
+                <div class="table-responsive">
+                    <table class="table table-condensed  table-striped w-auto small ">
+                        <thead>
+                            <tr style=" background-color: #c5c5c7b0;align-content:center;align-items:center">
+                                <th style=" background-color: darkgray;">Year</th>
+                                <th>Jan</th>
+                                <th>Feb</th>
+                                <th>Mar</th>
+                                <th>Apr</th>
+                                <th>May</th>
+                                <th>Jun</th>
+                                <th>Jul</th>
+                                <th>Aug</th>
+                                <th>Sep</th>
+                                <th>Oct</th>
+                                <th>Nov</th>
+                                <th>Dec</th>
+                                <th style=" background-color: darkgray;">Total</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.contributionlistDTO)
+                            {
+                                <tr>
+                                    <th style=" background-color: #c5c5c7b0;align-content:center;align-items:center">@item.Year   </th>
+                                    <td>@item.Jan    </td>
+                                    <td>@item.Feb    </td>
+                                    <td>@item.Mar    </td>
+                                    <td>@item.Apr    </td>
+                                    <td>@item.May    </td>
+                                    <td>@item.Jun    </td>
+                                    <td>@item.July   </td>
+                                    <td>@item.Aug    </td>
+                                    <td>@item.Sep    </td>
+                                    <td>@item.Oct    </td>
+                                    <td>@item.Nov    </td>
+                                    <td>@item.Dec    </td>
+
+                                    <th style=" background-color: #c5c5c7b0;align-content:center;align-items:center">@item.Total    </th>
+                                </tr>
+
+                            }
+                            <tr>
+
+                                <th colspan="13" style=" background-color: #c5c5c7b0;align-content:center;align-items:center"> Total : </th>
+                                <th style=" background-color:darkgray ;align-content:center;align-items:center">@TempData["Total"]</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+        </form>
+   
+    
+
+
+     
+
+
+        <div class="form-group noprint" style="padding:10px 0; text-align:right">
+            <a href="javascript:printDiv('printarea')">Print</a>
+        </div>
+        <div class="noprint">
+
+
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+        <div class="noprint">
+            <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+        </div>
+        @section Scripts {
+
+        }
+
+        @section Styles {
+            <style>
+
+
+                @@media print {
+                    .noprint {
+                        visibility: hidden;
+                    }
+                }
+            </style>
+        }

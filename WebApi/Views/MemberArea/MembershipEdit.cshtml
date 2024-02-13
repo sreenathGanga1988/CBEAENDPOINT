@@ -1,0 +1,333 @@
+﻿@model DTO.MemberDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@section Styles{
+    <style>
+
+
+        h1 {
+            color: darkblue;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+}
+<partial name="/Views/Shared/_UserMenu.cshtml" />
+<h1>MEMBERSHIP DETAILS</h1>
+
+<hr />
+
+<form asp-action="MembershipEdit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" maxlength="100" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StaffNo" id="lbl_StaffNo" class="control-label">Staff No</label>
+        </div>
+        <div class=" col-4">
+            <input id="StaffNo" name="StaffNo" v-model="dataModel.staffNo" type="text" class="form-control" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="GenderId" id="lbl_GenderId" class="control-label">Gender</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="GenderId" id="GenderId" v-model="dataModel.genderId" class="form-control" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Dob" id="lbl_Dob" class="control-label">Dob</label>
+        </div>
+        <div class=" col-4">
+            <input id="Dob" name="Dob" v-model="moment(dataModel.dob).format('YYYY-MM-DD')" type="date" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CategoryId" id="lbl_CategoryId" class="control-label">Category</label>
+        </div>
+        <div class=" col-4">
+            <input id="CategoryId" name="CategoryId" v-model="dataModel.categoryId" type="hidden" />
+            <v-select :options="categories" :reduce="category => category.code" label="label"  @@search="onCategorySearch" v-model="dataModel.categoryId"></v-select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DpCode" id="lbl_DpCode" class="control-label">DpCode</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DpCode" name="DpCode" v-model="dataModel.dpCode" type="hidden" />
+            @*<v-select :options="dpCodes" :reduce="dpCode => dpCode.code" v-model="dataModel.dpCode"></v-select>*@
+            <v-select :options="dpCodes" :reduce="dpCode => dpCode.code" label="label"  @@search="onDpCodeSearch" v-model="dataModel.dpCode"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="hidden" />
+            @*<v-select :options="designations" :reduce="designation => designation.code" v-model="dataModel.designationId"></v-select>*@
+            <v-select :options="designations" :reduce="designation => designation.code" label="label"  @@search="onDesignationSearch" v-model="dataModel.designationId"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Doj" id="lbl_Doj" class="control-label">Date of joining</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="Doj" name="Doj" v-model="moment(dataModel.doj).format('YYYY-MM-DD')" type="date" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DojtoScheme" id="lbl_DojtoScheme" class="control-label">Date of joining to Scheme</label>
+        </div>
+        <div class=" col-4">
+            <input id="DojtoScheme" name="DojtoScheme" v-model="moment(dataModel.dojtoScheme).format('YYYY-MM-DD')" type="date" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Nominee" id="lbl_Nominee" class="control-label">Nominee</label>
+        </div>
+        <div class=" col-4">
+            <input id="Nominee" name="Nominee" v-model="dataModel.nominee" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeRelation" id="lbl_NomineeRelation" class="control-label">Nominee Relation</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="NomineeRelation" id="NomineeRelation" v-model="dataModel.nomineeRelation" class="form-control">
+                <option value="none" selected disabled hidden>
+                    Select Relation
+                </option>
+                <option value="spouse">Spouse</option>
+                <option value="father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+                <option value="sibling">Sibling</option>
+                <option value="nephew">Nephew</option>
+                <option value="niece">Niece</option>
+                <option value="grandparent">Grandparent</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeIDentity" id="lbl_NomineeIDentity" class="control-label">Nominee Identity Num</label>
+        </div>
+        <div class=" col-4">
+            <input id="NomineeIDentity" name="NomineeIDentity" v-model="dataModel.nomineeIDentity" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UnionMember" id="lbl_UnionMember" class="control-label">Union Member</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="UnionMember" id="UnionMember" v-model="dataModel.unionMember" class="form-control" >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StatusId" id="lbl_StatusId" class="control-label">Status</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="StatusId" name="StatusId" v-model="dataModel.statusId" type="hidden" />
+            <v-select :options="statuses" :reduce="status => status.code" label="label"  @@search="onStatusSearch" v-model="dataModel.statusId"></v-select>
+
+        </div>
+    </div>
+
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class="form-group">
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+        </div>
+
+    </div>
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                    this.dataModel = @Json.Serialize(Model);
+              this.GenerateDropDowns('DESIGNATION', this.dataModel.designationId)
+
+                this.GenerateDropDowns('CATEGORY', this.dataModel.categoryId)
+                this.GenerateDropDowns('STATUS', this.dataModel.statusId)
+                this.GenerateDropDowns('BRANCH', this.dataModel.dpCode)
+            },
+            mounted() {
+               // GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                designations: [],
+                categories: [],
+                statuses: [],
+                dpCodes: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Name required.");
+                    }
+                    if (!this.dataModel.staffNo) {
+                        this.errors.push(" StaffNo  required.");
+                    }
+
+
+                    if (!this.dataModel.categoryId) {
+                        this.errors.push(" category  required.");
+                    }
+                    if (!this.dataModel.dpCode) {
+                        this.errors.push(" dpCode  required.");
+                    }
+                    if (!this.dataModel.designationId) {
+                        this.errors.push(" designation  required.");
+                    }
+
+                    if (!this.dataModel.dojtoScheme) {
+                        this.errors.push(" date of joining to Scheme  required.");
+                    }
+
+                    if (!this.dataModel.unionMember) {
+                        this.errors.push(" union Member  required.");
+                    }
+                    if (!this.dataModel.statusId) {
+                        this.errors.push(" Status  required.");
+                    }
+
+
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+                SetSelecteddesignations: function () {
+
+                    this.dataModel.designationId = this.designations.find(item => item.code == this.dataModel.designationId)
+
+                    this.dataModel.designationId = this.dataModel.designationId.code
+
+                },
+                SetSelectedcategorys: function () {
+
+                    this.dataModel.categoryId = this.categories.find(item => item.code == this.dataModel.categoryId)
+
+                    this.dataModel.categoryId = this.dataModel.categoryId.code
+
+                },
+                SetSelectedstatus: function () {
+
+                    this.dataModel.statusId = this.statuses.find(item => item.code == this.dataModel.statusId)
+
+                    this.dataModel.statusId = this.dataModel.statusId.code
+
+                },
+                SetSelecteddpCodes: function () {
+
+                    this.dataModel.dpCode = this.dpCodes.find(item => item.code == this.dataModel.dpCode)
+
+                    this.dataModel.dpCode = this.dataModel.dpCode.code
+
+                },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    <script type="text/javascript">$(document).ready(function () {
+
+
+    $("#MembershipEdit").addClass("active");
+
+        });</script>
+
+}

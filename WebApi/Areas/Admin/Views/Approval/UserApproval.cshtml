@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DTO.UserDTO>
+@{
+    ViewData["Title"] = "UserApproval";
+
+}
+
+<h2 class="form-heading">User Approval</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead><tr><th>Employee Id</th><th>Username</th><th>EmployeeName</th><th>EmailId</th><th>PhoneNum</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach (var element in Model)
+        {
+        <tr>
+            <td> @element.EmployeeId  </td>
+            <td> @element.UserName  </td>
+
+            <td>@element.EmployeeName  </td>
+            <td>@element.EmailId  </td>
+            <td>@element.PhoneNum  </td>
+            <td>
+
+
+
+                    <a class="btn btn-primary" href="~/Admin/Approval/ApproveAsync?id=5&type=A&tag=PendingUser" style="">
+
+                    <span class="material-icons">
+                        thumb_up_alt
+                    </span>
+                </a>
+                    <a class="btn btn-danger" href="~/Admin/Approval/ApproveAsync?id=5&type=R&tag=PendingUser">
+
+                    <span class="material-icons">
+                        thumb_down_alt
+                    </span>
+                </a>
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<div>
+    <a href="~/Admin/Approval" class="BacktoList"> &laquo; Back to List</a>
+</div>

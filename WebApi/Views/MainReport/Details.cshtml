@@ -1,0 +1,88 @@
+﻿@model DTO.MainReportDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="form-heading">Main ReportDetails</h2>
+<hr />
+
+<form>
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-6 col-sm-4 ">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class="col-6  col-sm-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" maxlength="150" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description" id="lbl_Description" class="control-label">Description</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description" name="Description" v-model="dataModel.description" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="SQLString" id="lbl_SQLString" class="control-label">SQLString</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="SQLString" name="SQLString" v-model="dataModel.sqlString" type="text" cols="15" rows="15" class="form-control" required disabled ></textarea>
+        </div>
+    </div>
+
+    <hr />
+
+
+
+
+
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+         mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

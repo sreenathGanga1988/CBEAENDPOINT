@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Entities\Base\**" />
+    <EmbeddedResource Remove="Entities\Base\**" />
+    <None Remove="Entities\Base\**" />
+  </ItemGroup>
+
+</Project>

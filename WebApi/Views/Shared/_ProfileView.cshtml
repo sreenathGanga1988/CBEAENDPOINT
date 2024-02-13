@@ -1,0 +1,155 @@
+﻿@model DTO.ProfileDTO
+    <br />
+<h1><span style="color:orange;">WELCOME</span>  @Model.Name.ToString().ToUpper()  </h1>
+<br />
+<div class="container container-border ">
+    <div class="user-profile">
+
+
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                StaffNo
+            </div>
+            <div class="col-4">
+                @Model.StaffNo.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Name
+            </div>
+            <div class="col-4">
+                @Model.Name.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Gender
+            </div>
+            <div class="col-4">
+                @Model.Gender_text.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Designation
+            </div>
+            <div class="col-4">
+                @Model.Designation_text.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Category
+            </div>
+            <div class="col-4">
+                @Model.Category_text.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Date of Birth
+            </div>
+            <div class="col-4">
+                @if(Model.Dob.HasValue)
+                {
+                    @Html.Raw(DateTime.Parse(Model.Dob.ToString()).ToString(" dd MMMM yyyy"));
+                }
+                else
+                {
+                    Html.Raw(   "Details not available");
+                }
+              
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Date of Join
+            </div>
+            <div class="col-4">
+                @if (Model.Doj.HasValue)
+                {
+                    
+                    @Html.Raw(DateTime.Parse(Model.Doj.ToString()).ToString(" dd MMMM yyyy"));
+                }
+                else
+                {
+                    Html.Raw("Details not available");
+                }
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                DpCode
+            </div>
+            <div class="col-4">
+                @Model.DpCode.ToString()
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Date From
+            </div>
+            <div class="col-4">
+                @if (Model.DojtoScheme.HasValue)
+                {
+                    @Html.Raw(DateTime.Parse(Model.DojtoScheme.ToString()).ToString(" dd MMMM yyyy"));
+               
+                }
+                else
+                {
+                Html.Raw("Details not available");
+                }
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Date To
+            </div>
+            <div class="col-4">
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Retirement Date
+            </div>
+            <div class="col-4">
+               
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Status
+            </div>
+            <div class="col-4">
+                @Model.Status_text
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Nominee
+            </div>
+            <div class="col-4">
+                @Model.Nominee
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 user-form">
+                Nominee Relationship
+            </div>
+            <div class="col-4">
+                @Model.NomineeRelation
+            </div>
+        </div>
+        <div class="button justify-content-center" id="contribution">
+           
+                <a href="/MemberArea/Contribution"  class="btn btn-block profilebtn"><i class="material-icons" style="color :white">&#8377;</i> Show Contribution </a>
+          
+        </div>
+
+
+    </div>
+</div>

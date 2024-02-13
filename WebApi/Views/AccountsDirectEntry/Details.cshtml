@@ -1,0 +1,174 @@
+﻿@model DTO.AccountsDirectEntryDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="form-heading">Accounts Direct Entry Details</h2>
+
+<hr />
+
+<form>
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Staff Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StaffNo" id="lbl_StaffNo" class="control-label">Staff No</label>
+        </div>
+        <div class=" col-4">
+            <input id="StaffNo" name="StaffNo" v-model="dataModel.staffNo" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DpCode" id="lbl_DpCode" class="control-label">DPCode</label>
+        </div>
+        <div class=" col-4">
+            <input id="DpCode" name="DpCode" v-model="dataModel.dpCode" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DdIba" id="lbl_DdIba" class="control-label">DdIba</label>
+        </div>
+        <div class=" col-4">
+            <input id="DdIba" name="DdIba" v-model="dataModel.ddIba" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DdIbaDate" id="lbl_DdIbaDate" class="control-label">DdIbaDate</label>
+        </div>
+        <div class=" col-4">
+            <input id="DdIbaDate" name="DdIbaDate" v-model="dataModel.ddIbaDate" type="text" class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Amt" id="lbl_Amt" class="control-label">Amount</label>
+        </div>
+        <div class=" col-4">
+            <input id="Amt" name="Amt" v-model="dataModel.amt" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Enrl" id="lbl_Enrl" class="control-label">Enrl</label>
+        </div>
+        <div class=" col-4">
+            <input id="Enrl" name="Enrl" v-model="dataModel.enrl" type="text" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Fine" id="lbl_Fine" class="control-label">Fine </label>
+        </div>
+        <div class=" col-4">
+            <input id="Fine" name="Fine" v-model="dataModel.fine" type="text" class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F9" id="lbl_F9" class="control-label">F9</label>
+        </div>
+        <div class=" col-4">
+            <input id="F9" name="F9" v-model="dataModel.f9" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F10" id="lbl_F10" class="control-label">F10</label>
+        </div>
+        <div class=" col-4">
+            <input id="F10" name="F10" v-model="dataModel.f10" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F11" id="lbl_F11" class="control-label">F11</label>
+        </div>
+        <div class=" col-4">
+            <input id="F11" name="F11" v-model="dataModel.f11" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="YearOf" id="lbl_UserTypeId" class="control-label">year</label>
+        </div>
+        <div class=" col-4">
+            <input id="YearOf" name="YearOf" v-model="dataModel.yearOf" type="number" class="form-control" required disabled />
+           
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="MonthCode" id="lbl_MonthCode" class="control-label">Month</label>
+        </div>
+        <div class=" col-4">
+            <input id="MonthCode" name="MonthCode" v-model="dataModel.monthCode" type="number" class="form-control" required disabled />
+
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'AccountsDirectEntry',
+                    };
+                }
+            },
+            methods: {
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

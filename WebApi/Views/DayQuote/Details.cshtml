@@ -1,0 +1,99 @@
+﻿@model DTO.DayQuoteDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="form-heading">Day Quote Details</h2>
+<hr />
+
+<form>
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Day" id="lbl_Day" class="control-label">Day</label>
+        </div>
+        <div class=" col-4">
+            <input id="Day" name="Day" v-model="dataModel.day" type="number" required class="form-control" disabled/>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="MonthCode" id="lbl_MonthCode" class="control-label">Month</label>
+        </div>
+        <div class=" col-4">
+            <input id="MonthCode" name="MonthCode" v-model="dataModel.monthCode" type="number" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ToDayQuote" id="lbl_ToDayQuote" class="control-label">ToDayQuote</label>
+        </div>
+        <div class=" col-4">
+            <input id="ToDayQuote" name="ToDayQuote" v-model="dataModel.toDayQuote" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UnformatedContent" id="lbl_UnformatedContent" class="control-label">UnformatedContent</label>
+        </div>
+        <div class=" col-4">
+            <input id="UnformatedContent" name="UnformatedContent" v-model="dataModel.unformatedContent" type="text" required class="form-control" disabled/>
+        </div>
+    </div>
+
+
+    <hr />
+
+
+
+
+
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'DayQuote',
+                    };
+                }
+            },
+            methods: {
+              
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

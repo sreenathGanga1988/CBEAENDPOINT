@@ -1,0 +1,6 @@
+@CBEAPI_HostAddress = http://localhost:5293
+
+GET {{CBEAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,72 @@
+﻿@using System.Data
+@{
+    ViewData["Title"] = "Contribution";
+
+    if (ViewBag.CurrentUserRole == "1")
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<partial name="/Views/Shared/_UserMenu.cshtml" />
+<h2 class="form-heading">Contribution</h2>
+<hr />
+<div class="table-responsive">
+    <table class="table table-condensed  table-striped w-auto small ">
+        <thead>
+            <tr style=" background-color: #c5c5c7b0;align-content:center;align-items:center">
+                <th style=" background-color: darkgray;">Year</th>
+                <th>Jan</th>
+                <th>Feb</th>
+                <th>Mar</th>
+                <th>Apr</th>
+                <th>May</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Aug</th>
+                <th>Sep</th>
+                <th>Oct</th>
+                <th>Nov</th>
+                <th>Dec</th>
+                <th style=" background-color: darkgray;">Total</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th style=" background-color: #c5c5c7b0;align-content:center;align-items:center">@item.Year   </th>
+                    <td>@item.Jan    </td>
+                    <td>@item.Feb    </td>
+                    <td>@item.Mar    </td>
+                    <td>@item.Apr    </td>
+                    <td>@item.May    </td>
+                    <td>@item.Jun    </td>
+                    <td>@item.July   </td>
+                    <td>@item.Aug    </td>
+                    <td>@item.Sep    </td>
+                    <td>@item.Oct    </td>
+                    <td>@item.Nov    </td>
+                    <td>@item.Dec    </td>
+
+                    <th style=" background-color: #c5c5c7b0;align-content:center;align-items:center">@item.Total    </th>
+                </tr>
+
+            }
+            <tr>
+
+                <th colspan="13" style=" background-color: #c5c5c7b0;align-content:center;align-items:center"> Total : </th>
+                <th style=" background-color:darkgray ;align-content:center;align-items:center">@TempData["Total"]</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group noprint" style="padding:10px 0; text-align:right">
+    <a href="javascript:printDiv('printarea')">Print</a>
+</div>

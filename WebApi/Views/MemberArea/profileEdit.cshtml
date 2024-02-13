@@ -1,0 +1,178 @@
+﻿@model DTO.UserDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+@section Styles{
+    <style>
+
+
+        h1 {
+            color: darkblue;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+}
+<partial name="/Views/Shared/_UserMenu.cshtml" />
+
+
+<h1>USER ACCOUNT SETTINGS</h1>
+<hr />
+
+<form asp-action="ProfileEdit" class="user-profile">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4 user-form">
+            <label for="UserName" id="lbl_UserName" class="control-label">User Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="UserName" name="UserName" v-model="dataModel.userName" type="text" maxlength="50" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center user-form">
+        <div class="form-group col-4">
+            <label for="Password" id="lbl_Password" class="control-label">Old Password</label>
+        </div>
+        <div class=" col-4">
+            <input id="OldPassWord" name="OldPassWord" v-model="dataModel.oldPassWord" type="Password" maxlength="100" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center user-form">
+        <div class="form-group col-4">
+            <label for="Password" id="lbl_Password" class="control-label">New Password</label>
+        </div>
+        <div class=" col-4">
+            <input id="Password" name="Password" v-model="dataModel.password" type="Password" maxlength="100" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center user-form">
+        <div class="form-group col-4">
+            <label for="Password" id="lbl_Password" class="control-label">Confirm Password</label>
+        </div>
+        <div class=" col-4">
+            <input id="ConfirmPassword" name="ConfirmPassword" v-model="dataModel.confirmPassword" type="Password" maxlength="100" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4" style="display:none">
+            <label for="UserTypeId" id="lbl_UserTypeId" class="control-label">UserTypeId</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="UserTypeId" name="UserTypeId" v-model="dataModel.userTypeId" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4" style="display:none">
+            <label for="EmployeeId" id="lbl_EmployeeId" class="control-label">EmployeeId</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="EmployeeId" name="EmployeeId" v-model="dataModel.employeeId" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4 user-form">
+            <label for="EmailId" id="lbl_EmailId" class="control-label">Email Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="EmailId" name="EmailId" v-model="dataModel.emailId" type="email" maxlength="100" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4 user-form ">
+            <label for="PhoneNum" id="lbl_PhoneNum" class="control-label">Phone Num</label>
+        </div>
+        <div class=" col-4">
+            <input id="PhoneNum" name="PhoneNum" v-model="dataModel.phoneNum" type="text" maxlength="100" class="form-control" />
+        </div>
+    </div>
+
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+        <div class="form-group">
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+        </div>
+
+    </div>
+
+
+
+</form>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.dataModel.userName) {
+                        this.errors.push(" User Name required.");
+                    }
+                    if (!this.dataModel.password) {
+                        this.errors.push(" Password required.");
+                    }
+                    if (!this.dataModel.oldPassWord) {
+                        this.errors.push(" Old Password required.");
+                    }
+                    if (!((this.dataModel.password) == (this.dataModel.confirmPassword))) {
+                        this.errors.push(" Password mismatch.");
+                    }
+
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+    $("#ProfileEdit").addClass("active");
+
+});
+    </script>
+
+}

@@ -1,0 +1,108 @@
+﻿@model DTO.DeathClaimDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <h2 class="form-heading">Refund Details </h2>
+<hr />
+
+<form>
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label for="Id" id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StateId" id="lbl_StateId" class="control-label">State </label>
+        </div>
+        <div class=" col-4">
+            <input id="StateId" name="StateId" v-model="dataModel.stateId" type="text" class="form-control" required disabled/>
+            
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="text" class="form-control" required disabled />
+           
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="YearOF" id="lbl_YearOF" class="control-label">Year</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="YearOF" name="YearOF" v-model="dataModel.yearOF" type="text" class="form-control" required disabled />
+            
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Count" id="lbl_Count" class="control-label">Count</label>
+        </div>
+        <div class=" col-4">
+            <input id="Count" name="Count" v-model="dataModel.count" type="number" class="form-control" required disabled/>
+        </div>
+    </div>
+
+
+
+
+    <hr />
+
+
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

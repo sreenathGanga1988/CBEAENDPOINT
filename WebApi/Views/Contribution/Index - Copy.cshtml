@@ -1,0 +1,297 @@
+﻿@{ ViewData["Title"] = "Index"; }
+@section Styles{
+    <style>
+
+
+       
+
+    </style>
+
+
+}
+
+<h2 class="form-heading">Contribution</h2>
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+
+
+
+<a href="/Contribution/FileUpload/" id="Fileupload-btn" class="button sub-button"> File upload</a>
+
+<a href="/AccountsDirectEntry/index/" id="Directentry-btn" class="button sub-button"> Direct Entry </a>
+
+
+<hr />
+
+
+
+<div class="form-group row">
+    <label for="Type" class="col-4 col-form-label">Report Type</label>
+    <div class="col-6">
+        <select name="type" id="type" class="form-control">
+            <option value="volvo">Summary</option>
+            <option value="saab">Detailed</option>
+            <option value="mercedes">Defaulter</option>
+
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="Year" class="col-4 col-form-label">Year</label>
+    <div class="col-6">
+    
+
+        <v-select :options="years"   :reduce="year => year.code" v-model="year"></v-select>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Month</label>
+    <div class="col-6">
+
+        <v-select :options="months"  :reduce="month => month.code"  v-model="month"></v-select>
+
+        @*<v-select :options="months" label="text" :reduce="months => months.id"  v-model="month"></v-select>*@
+
+    </div>
+</div>
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Circle</label>
+    <div class="col-6">
+
+
+        <select v-model.lazy="circle" id="Circle" name="Circle" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Branch</label>
+    <div class="col-6">
+
+
+        <select v-model.lazy="branch" id="Branch" name="Branch" class="form-control"></select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Member</label>
+    <div class="col-6">
+
+        <v-select :options="members" :reduce="country => country.id" label="text" @@search="onSearch" v-model="member"></v-select>
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <div class="offset-4 col-6">
+
+
+        <button id="submit1" name="submit" type="button" v-on:click="ShowData()" class="btn btn-primary">Show </button>
+
+    </div>
+</div>
+
+
+<div>
+    <table class="table table-bordered">
+        <thead><tr><th>Total Entry </th> <th>Total Amount </th> </tr></thead>
+        <tbody><tr><td>{{totalentry}}</td><td>{{totalamount}}</td></tr></tbody>
+    </table>
+</div>
+
+<hr />
+
+<table class="table KiduDatatables">
+    <thead><tr><th>Year</th><th>Month</th><th>Staff</th><th>Amount</th></tr></thead>
+    <tbody>
+
+        <tr v-for=" (invdet, index) in dataModel">
+
+            <td>{{invdet.year}} </td>
+            <td>{{invdet.month}} </td>
+            <td>{{invdet.staffname}}</td>
+            <td>{{invdet.amount}}</td>
+
+        </tr>
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.GetMonthDropDowns();
+
+                this.GetYearDropDowns();
+            },
+            data: {
+                years: [],
+                months: [],
+                members: [],
+                totalentry: 0,
+                totalamount: 0,
+                datatab: null,
+                dataModel: null,
+                year: 0,
+                month: 0,
+                circle: 0,
+                member: 0,
+                branch: 0,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id) {
+                        this.errors.push("Category Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Category Name required.");
+                    }
+                    if (!this.dataModel.abbreviation) {
+                        this.errors.push(" Category Code required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+
+
+                GetMonthDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MONTH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.months = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });                    
+                },
+
+
+                GetYearDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'YEAR');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.years = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+
+                ShowData: function () {
+                    $.blockUI();
+                    this.dataModel = null;
+                    axios.get('/api/data?Year=' + this.year + '&Month=' + this.month + '&Member=' + this.member + '&Branch=' + this.branch + '&Circle=' + this.circle + '').then(response => {
+
+                        this.dataModel = response.data.items;
+                        this.totalentry = this.dataModel.length;
+                        if (this.totalentry > 0) {
+
+                            this.totalamount = this.dataModel.map(item => item.amount).reduce((total, amount) => eval(total) + eval(amount));
+                        }
+                        // this.initDatatable();
+                        $.unblockUI();
+                        console.log(this.dataModel);
+                    });
+
+                },
+
+                onSearch(search, loading) {
+
+
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MEMBER');
+                    bodyFormData.append('q', search);
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.members = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+
+                        });
+                },
+
+
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            ////MakeSelect2("#Month", "Select Month", "/api/data", false, "Month", 9, "")
+            ////MakeSelect2("#Member", "Select Member", "/api/data", false, "Member", 9, "")
+            ////MakeSelect2("#Branch", "Select Branch", "/api/data", false, "Branch", 9, "")
+            ////MakeSelect2("#Circle", "Select Circle", "/api/data", false, "Circle", 9, "")
+
+
+        });
+
+
+
+
+        function CreateTable(data) {
+
+        }
+
+    </script>
+
+
+
+}

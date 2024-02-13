@@ -1,0 +1,422 @@
+﻿@model DTO.MemberDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <h2 class="form-heading">Create New Member</h2>
+
+<hr />
+
+<form asp-action="Create">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label for="Id" id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" maxlength="100" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StaffNo" id="lbl_StaffNo" class="control-label">Staff No</label>
+        </div>
+        <div class=" col-4">
+            <input id="StaffNo" name="StaffNo" v-model="dataModel.staffNo" type="text" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="GenderId" id="lbl_GenderId" class="control-label">Gender</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="GenderId" id="GenderId" v-model="dataModel.genderId" class="form-control" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Dob" id="lbl_Dob" class="control-label">Dob</label>
+        </div>
+        <div class=" col-4">
+            <input id="Dob" name="Dob" v-model="dataModel.dob" type="date" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CategoryId" id="lbl_CategoryId" class="control-label">Category</label>
+        </div>
+        <div class=" col-4">
+            <input id="CategoryId" name="CategoryId" v-model="dataModel.categoryId" type="hidden" />
+            <v-select :options="categories" :reduce="category => category.code" v-model="dataModel.categoryId"></v-select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DpCode" id="lbl_DpCode" class="control-label">DpCode</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DpCode" name="DpCode" v-model="dataModel.dpCode" type="hidden" />
+            @*<v-select :options="dpCodes" :reduce="dpCode => dpCode.code" v-model="dataModel.dpCode"></v-select>*@
+            <v-select :options="dpCodes" :reduce="dpCode => dpCode.code" label="label"  @@search="onDpCodeSearch" v-model="dataModel.dpCode"></v-select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="hidden" />
+            @*<v-select :options="designations" :reduce="designation => designation.code" v-model="dataModel.designationId"></v-select>*@
+            <v-select :options="designations" :reduce="designation => designation.code" label="label"  @@search="onDesignationSearch" v-model="dataModel.designationId"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Doj" id="lbl_Doj" class="control-label">Date of joining</label>
+        </div>
+        <div class=" col-4">
+            <input id="Doj" name="Doj" v-model="dataModel.doj" type="date" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DojtoScheme" id="lbl_DojtoScheme" class="control-label">Date of joining to Scheme</label>
+        </div>
+        <div class=" col-4">
+            <input id="DojtoScheme" name="DojtoScheme" v-model="dataModel.dojtoScheme" type="date" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Nominee" id="lbl_Nominee" class="control-label">Nominee</label>
+        </div>
+        <div class=" col-4">
+            <input id="Nominee" name="Nominee" v-model="dataModel.nominee" type="text" class="form-control"  />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeRelation" id="lbl_NomineeRelation" class="control-label">Nominee Relation</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="NomineeRelation" id="NomineeRelation" v-model="dataModel.nomineeRelation" class="form-control" >
+                <option value="none" selected disabled hidden>
+                    Select Relation
+                </option>
+                <option value="spouse">Spouse</option>
+                <option value="father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+                <option value="sibling">Sibling</option>
+                <option value="nephew">Nephew</option>
+                <option value="niece">Niece</option>
+                <option value="grandparent">Grandparent</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NomineeIDentity" id="lbl_NomineeIDentity" class="control-label">Nominee Identity Num</label>
+        </div>
+        <div class=" col-4">
+            <input id="NomineeIDentity" name="NomineeIDentity" v-model="dataModel.nomineeIDentity" type="text" class="form-control"  />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UnionMember" id="lbl_UnionMember" class="control-label">Union Member</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="UnionMember" id="UnionMember" v-model="dataModel.unionMember" class="form-control" required >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StatusId" id="lbl_StatusId" class="control-label">Status</label>
+        </div>
+        <div class=" col-4">
+
+            <input id="StatusId" name="StatusId" v-model="dataModel.statusId" type="hidden" />
+            <v-select :options="statuses" :reduce="status => status.code" v-model="dataModel.statusId"></v-select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group form-check col-4">
+
+
+            <input type="checkbox" id="IsRegCompleted" name="IsRegCompleted" v-model="dataModel.isRegCompleted">
+            <label for="checkbox">Registration Completed ??</label>
+
+
+        </div>
+
+        <div class="form-group form-check col-4">
+
+
+
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+     
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.dataModel.unionMember = "1";
+                this.dataModel.statusId = "3";
+               // this.GetDesignationDropDowns();
+             //   this.GetCategoryDropDowns();
+               // this.GetStatusDropDowns();
+                this.GenerateDropDowns('DESIGNATION', "")
+                this.GenerateDropDowns('CATEGORY', "")
+                this.GenerateDropDowns('STATUS', "")
+                this.GenerateDropDowns('BRANCH', "")
+              //  this.GetDpCodeDropDowns("");
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                designations: [],
+                categories: [],
+                statuses: [],
+                dpCodes: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                 
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Name required.");
+                    }
+                    if (!this.dataModel.staffNo) {
+                        this.errors.push(" StaffNo  required.");
+                    }
+                    if (!this.dataModel.categoryId) {
+                        this.errors.push(" Category  required.");
+                    }
+                    
+                    if (!this.dataModel.dob) {
+                        this.errors.push(" dob  required.");
+                    }
+                   
+                    if (!this.dataModel.dpCode) {
+                        this.errors.push(" dpCode  required.");
+                    }
+                    if (!this.dataModel.designationId) {
+                        this.errors.push(" designation  required.");
+                    }
+                    if (!this.dataModel.doj) {
+                        this.errors.push(" date of join required.");
+                    }
+                    if (!this.dataModel.dojtoScheme) {
+                        this.errors.push(" date of joining to Scheme  required.");
+                    }
+            
+                    if (!this.dataModel.unionMember) {
+                        this.errors.push(" union Member  required.");
+                    }
+                    if (!this.dataModel.statusId) {
+                        this.errors.push(" Status  required.");
+                    }
+
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,          
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+                //GetDesignationDropDowns: function () {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', 'DESIGNATION');
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+                //            this.designations = response.data.items;
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+
+                //GetCategoryDropDowns: function () {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', 'CATEGORY');
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+                //            this.categories = response.data.items;
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+
+                //GetStatusDropDowns: function () {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', 'STATUS');
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+                //            this.statuses = response.data.items;
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+
+                //GetDpCodeDropDowns: function (search) {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', 'BRANCH');
+                //    bodyFormData.append('q', search);
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+                //            this.dpCodes = response.data.items;
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+
+               
+
+
+
+
+
+
+                //GenerateDropDowns: function (listType,search) {
+                //    var bodyFormData = new FormData();
+                //    bodyFormData.append('listType', listType);
+                //    bodyFormData.append('q', search);
+                //    axios({
+                //        method: 'post',
+                //        url: '/api/data/',
+                //        data: bodyFormData,
+                //        headers: { 'Content-Type': 'multipart/form-data' }
+                //    })
+                //        .then(function (response) {
+                //            //handle success
+
+                //            if (listType === 'BRANCH') {
+                //                this.dpCodes = response.data.items;
+                //            }
+                //           else if (listType === 'STATUS') {
+                //                this.statuses = response.data.items;
+                //            }
+                //          else  if (listType === 'CATEGORY') {
+                //                this.categories = response.data.items;
+                //            }
+                //            else if (listType === 'DESIGNATION') {
+                //                this.designations = response.data.items;
+                //            }
+                //        }.bind(this))
+                //        .catch(function (response) {
+                //            //handle error
+                //            console.log(response);
+                //        });
+                //},
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

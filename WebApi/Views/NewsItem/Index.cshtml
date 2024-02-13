@@ -1,0 +1,100 @@
+﻿
+@{ ViewData["Title"] = "Index"; }
+
+@section Styles{
+
+
+
+}
+<h2 class="form-heading">News Item</h2>
+
+
+
+
+
+
+
+
+<form method="post" action="/NEWSITEM/DeleteAll">
+
+
+    <div class="card">
+        <div class="card-header">
+            Delete News of a day
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Please select the date for deleting news</h5>
+            <p class="card-text">
+    <input type="date" id="deldate" name="deldate" />
+</p>
+            <input type="submit" class="btn btn-danger btn-md center-block" value="Delete" />
+        </div>
+    </div>
+
+
+    <!-- Input and Submit elements -->
+    
+
+</form>
+<br />
+
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+<partial name="/Views/Shared/_ListView.cshtml" />
+
+
+
+
+<div>
+    <a href="~/MainPage" class="BacktoList"> &laquo; Back to Mainpage</a>
+</div>
+
+
+
+@section Scripts {
+
+
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+    var ColumnHeader =  @Json.Serialize((Model.ColumnHeaders));
+    var Columns =  @Json.Serialize((Model.Columns));
+    var dataModels =  @Json.Serialize((Model.newsitems));
+
+
+    var IdColumn ="id";
+    var EditAction = "/NewsItem/Edit";
+        var ViewAction = "/NewsItem/Details";
+    var DeleteAction = "/NewsItem/Delete";
+           var AddAction = "/NewsItem/Create";
+        $(document).ready(function () {
+
+            LoadData();
+            MarkasDatatable("");
+        });
+
+
+
+
+
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+

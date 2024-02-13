@@ -1,0 +1,38 @@
+﻿<input id="VW_CreatedByUserId" type="hidden" v-model="dataModel.createdByUserId" />
+<input id="VW_ModifiedByUserId" type="hidden" v-model="dataModel.modifiedByUserId" />
+<input id="VW_DeletedByByUserId" type="hidden" v-model="dataModel.deletedByByUserId" />
+<table class="table table-striped ">
+
+    <thead>
+        <tr><th style="text-align:center" colspan="4">Audit Log</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Added By :</th>
+            <td id="VW_CreatedbyUserName">  {{dataModel.addedUser}}</td>
+            <th>Added on :</th>
+            <td>   {{moment(String(dataModel.createdDate)).format('Do MMMM YYYY, h:mm:ss a') }} </td>
+
+        </tr>
+
+
+
+        <tr>
+            <th>Modified By :</th>
+            <td id="VW_ModifiedbyUserName"> {{dataModel.modifiedUser}} </td>
+
+
+            <th>Modified on :</th>
+            <td>{{moment(String(dataModel.modifiedDate)).format('Do MMMM YYYY, h:mm:ss a') }}   </td>
+
+        </tr>
+        <tr>
+            <th>Deleted By :</th>
+            <td id="DeletedbyUserName">  {{dataModel.deletedUser}} </td>
+
+            <th>Deleted on :</th>
+            <td>  {{moment(String(dataModel.deleteddate)).format('Do MMMM YYYY, h:mm:ss a') }}   </td>
+
+        </tr>
+    </tbody>
+</table>

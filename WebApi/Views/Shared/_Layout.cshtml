@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Canara Bank Employees' Union Golden Jubilee Welfare Fund Scheme </title>
+    <meta name="description" content="Canara Bank Employees' Union Golden Jubilee Welfare Fund Scheme">
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.css" rel="stylesheet" />
+    <link href="~/css/Homepage.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/_listView.js" asp-append-version="true"></script>
+    <link href="~/lib/vue-select/vue-select.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    @RenderSection("Styles", false)
+
+
+    <header>
+
+
+        @if (ViewBag.isindex != null)
+        {
+            if (ViewBag.isindex == "Y")
+            {
+
+            }
+        }
+        else
+        {
+
+        }
+
+        <nav class="navbar main-menu navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+
+            <div class="container">
+                @if (ViewBag.isindex == null)
+                {
+                    <a class="navbar-brand nav-aibea" asp-area="" asp-controller="Home" asp-action="Index">
+                        <!--<img src="~/images/AIBEA_Lg.gif" alt="CBEU" style="float:left; width:8vh;border-radius: 1vh;" ;>--->
+                        <img src="~/images/EMBLEMcanvas.jpg" alt="CBEU" style="float:left; width:6vh;border-radius: 5vh;" ;>
+                    </a>
+                }
+
+
+
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 navigation justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Login">Members Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Rules">Rules & Regulation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Downloads">Downloads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ManagingCommittee">Managing Committee</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="claims">Claims Settled</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contactus">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+                @if (ViewBag.isindex == null)
+                {
+                    <a class="navbar-brand-leftside nav-cbeu" id="nav-logo-aibea-side" asp-area="" asp-controller="Home" asp-action="Index">
+                        <!---<img src="~/images/Logo.jpg" alt="CBEU" style="float:right; width:7vh;border-radius: 5vh;" ;>-->
+                        <img src="~/images/CBEU.jpg" alt="CBEU" style="float:right; width:8vh;border-radius: 5vh;" ;>
+                    </a>
+                }
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <div id="vueAppTemplate">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - CBEU - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="color:orange;" ;>HESTIA</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
+    @*<script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>*@
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Vue_mixin.js"></script>
+    <script src="~/lib/vue-select/vue-select.js"></script>
+    <script src="~/lib/axios/axios.min.js"></script>
+    <script src="~/lib/moment.js/moment.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        Vue.component('v-select', VueSelect.VueSelect)
+        var app = new Vue({
+            el: '#vueAppTemplate',
+            mixins: mixinArray,    //defined in site.js
+            data: {
+                moment: moment,
+                appMessage: 'Hello World'
+                //add more data properties here
+            },
+            methods: {
+                //add methods here
+            }
+        });
+        $(".alert").delay(5000).slideUp(200, function () {
+            $(this).alert('close');
+        });
+        function printDiv(obj) {
+            $("#wrapper").toggleClass("toggled");
+            window.print()
+        }
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+    </script>
+
+
+</body>
+</html>

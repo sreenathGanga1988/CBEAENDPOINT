@@ -1,0 +1,295 @@
+﻿@model DTO.AccountsDirectEntryDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="form-heading">Edit Accounts Direct Entry</h2>
+
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Staff Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StaffNo" id="lbl_StaffNo" class="control-label">Staff No</label>
+        </div>
+        <div class=" col-4">
+            <input id="StaffNo" name="StaffNo" v-model="dataModel.staffNo" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DpCode" id="lbl_DpCode" class="control-label">DPCode</label>
+        </div>
+        <div class=" col-4">
+            <input id="DpCode" name="DpCode" v-model="dataModel.dpCode" type="hidden" />
+            <v-select :options="dpCodes" :reduce="dpCode => dpCode.code" v-model="dataModel.dpCode"></v-select>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DdIba" id="lbl_DdIba" class="control-label">DdIba</label>
+        </div>
+        <div class=" col-4">
+            <input id="DdIba" name="DdIba" v-model="dataModel.ddIba" type="text" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DdIbaDate" id="lbl_DdIbaDate" class="control-label">DdIbaDate</label>
+        </div>
+        <div class=" col-4">
+            <input id="DdIbaDate" name="DdIbaDate" v-model="dataModel.ddIbaDate" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Amt" id="lbl_Amt" class="control-label">Amount</label>
+        </div>
+        <div class=" col-4">
+            <input id="Amt" name="Amt" v-model="dataModel.amt" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Enrl" id="lbl_Enrl" class="control-label">Enrl</label>
+        </div>
+        <div class=" col-4">
+            <input id="Enrl" name="Enrl" v-model="dataModel.enrl" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Fine" id="lbl_Fine" class="control-label">Fine </label>
+        </div>
+        <div class=" col-4">
+            <input id="Fine" name="Fine" v-model="dataModel.fine" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F9" id="lbl_F9" class="control-label">F9</label>
+        </div>
+        <div class=" col-4">
+            <input id="F9" name="F9" v-model="dataModel.f9" type="text" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F10" id="lbl_F10" class="control-label">F10</label>
+        </div>
+        <div class=" col-4">
+            <input id="F10" name="F10" v-model="dataModel.f10" type="text" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="F11" id="lbl_F11" class="control-label">F11</label>
+        </div>
+        <div class=" col-4">
+            <input id="F11" name="F11" v-model="dataModel.f11" type="text" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="YearOf" id="lbl_UserTypeId" class="control-label">year</label>
+        </div>
+        <div class=" col-4">
+
+            <input type="hidden" v-model="dataModel.yearOf" name="YearOf" />
+            <v-select :options="yearOfs" :reduce="yearOf => yearOf.code" v-model="dataModel.yearOf"></v-select>
+
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="MonthCode" id="lbl_MonthCode" class="control-label">Month</label>
+        </div>
+        <div class=" col-4">
+
+            <input type="hidden" v-model="dataModel.monthCode" name="MonthCode" />
+            <v-select :options="monthCodes" :reduce="monthCode => monthCode.code" v-model="dataModel.monthCode"></v-select>
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.GetDpCodeDropDowns();
+                this.GetMonthDropDowns();
+                this.GetYearDropDowns();
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                dpCodes: [],
+                monthCodes: [],
+                yearOfs: [],
+                function() {
+                    return {
+                        appMessage: 'AccountsDirectEntry',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Name required.");
+                    }
+                    if (!this.dataModel.staffNo) {
+                        this.errors.push(" Staff No required.");
+                    }
+                    if (!this.dataModel.dpCode) {
+                        this.errors.push(" Branch DpCode required.");
+                    }
+                    if (!this.dataModel.ddIbaDate) {
+                        this.errors.push(" DdIbaDate required.");
+                    }
+
+                    if (!this.dataModel.amt) {
+                        this.errors.push(" Amount required.");
+                    }
+                    if (!this.dataModel.monthCode) {
+                        this.errors.push(" Month required.");
+                    }
+                    if (!this.dataModel.yearOf) {
+                        this.errors.push(" Year required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+                GetDpCodeDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'BRANCH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.dpCodes = response.data.items;
+                            this.SetSelecteddpCodes();
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                GetYearDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'YEAR');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+
+                            this.yearOfs = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+                GetMonthDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MONTH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+
+                            this.monthCodes = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                SetSelecteddpCodes: function () {
+
+                    this.dataModel.dpCode = this.dpCodes.find(item => item.code == this.dataModel.dpCode)
+
+                    this.dataModel.dpCode = this.dataModel.dpCode.code
+
+                },
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

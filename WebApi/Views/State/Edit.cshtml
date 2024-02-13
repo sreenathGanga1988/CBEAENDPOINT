@@ -1,0 +1,141 @@
+﻿@model DTO.StateDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <h2 class="form-heading">Edit State</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+
+
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">State Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text"  maxlength="150" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Abbreviation" id="lbl_Abbreviation" class="control-label">Code</label>
+        </div>
+        <div class=" col-4">
+            <input id="Abbreviation" name="Abbreviation" v-model="dataModel.abbreviation" type="text"  maxlength="7" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group form-check col-4">
+
+
+            <input type="hidden"  id="IsActive" name="IsActive" v-model="IsActive"/>
+            <input type="checkbox" id="chk_IsActive" name="chk_IsActive" v-model="dataModel.isActive"  v-on:input="IsActive = !dataModel.isActive">
+            <label for="checkbox">Active ??</label>
+
+
+        </div>
+
+        <div class="form-group form-check col-4">
+
+           
+            <input type="checkbox" id="Chk_IsDeleted" name="IsDeleted" v-model:number="dataModel.isDeleted" >
+            <label for="checkbox">Deleted ??</label>
+
+
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.IsActive = this.data.isActive;
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                IsActive: null,
+                function() {
+                    return {
+                       appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                  //  this.IsActive = this.dataModel.isActive ? 1 : 0;
+
+                   // this.IsActive = this.dataModel.isActive.toString();
+
+
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("State Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" State Name required.");
+                    }
+                    if (!this.dataModel.abbreviation) {
+                        this.errors.push(" State Code required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

@@ -1,0 +1,190 @@
+﻿@model List<dynamic>
+@{ ViewData["Title"] = "Index"; }
+@section Styles{
+    <style>
+    </style>
+
+
+}
+
+<h2 class="form-heading">Contributions</h2>
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+
+
+
+<a href="/Contribution/FileUpload/" id="Fileupload-btn" class="button sub-button"> File upload</a>
+
+<a href="/AccountsDirectEntry/index/" id="Directentry-btn" class="button sub-button"> Direct Entry </a>
+
+
+<a href="/Admin/Home/contribution" id="Directentry-btn" class="button sub-button"> Consolidated Contribution </a>
+
+
+<a href="/Contribution/DefaulterList" id="Directentry-btn" class="button sub-button"> Defaulter List </a>
+
+<a href="/DeathClaim/index" id="Directentry-btn" class="button sub-button"> Death Claims </a>
+
+<a href="/Refund/index" id="Directentry-btn" class="button sub-button"> Refunds </a>
+
+<hr />
+
+
+
+
+
+
+
+<table class="table KiduDatatables">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Total Amount</th>
+            <th>Total Entries </th>
+            <th>New / Wrong Members </th>
+            <th>
+                New / Wrong DpCode
+            </th>
+            <th>New / Wrong Circle </th>
+            <th>Parked </th>
+            <th>Added By</th>
+            <th>Added Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Year </td>
+                <td>@item.MonthName </td>
+                <td>@item.totalamount </td>
+                <td>@item.totalentry </td>
+                <td><a href="/Contribution/ContriReports?id=@item.Id&type=NewMembers">@item.NewMembers</a> </td>
+                <td><a href="/Contribution/ContriReports?id=@item.Id&type=WrongBranch">@item.WrongBranch</a> </td>
+                <td><a href="/Contribution/ContriReports?id=@item.Id&type=WrongCircle">@item.WrongCircle</a> </td>
+                <td><a href="/Contribution/ContriReports?id=@item.Id&type=ParkedItem">@item.ParkedItem</a> </td>
+
+                <td>@item.AddedBy </td>
+                <td>@item.AddedDate </td>
+                <td>
+                    @if (item.ContributionStatus == "A")
+                    {
+                        <span>Approved</span>
+                    }
+                    else if (item.ContributionStatus == "P")
+                    {
+                        <span>Waiting Approval</span>
+                    }
+                    else if (item.ContributionStatus == "O")
+                    {
+                        <span>Open</span>
+                    }
+
+
+                </td>
+                <td>
+                    <a href="/Contribution/ContriReports?id=@item.Id&type=All" style="padding:10px"><i class="material-icons" style="color :blue">preview</i> </a>
+
+                    @if (item.ContributionStatus != "A" && item.ContributionStatus != "P")
+                    {
+                        @if ((int.Parse(item.NewMembers.ToString()) + int.Parse(item.WrongBranch.ToString()) + int.Parse(item.WrongCircle.ToString())) == 0)
+                        {
+                            <a data-toggle='tooltip' title='Forward for Approval !' href="/Contribution/ForwardContribution?id=@item.Id" style="padding:10px"> <i class="material-icons" style="color :green">forward_to_inbox</i> </a>
+                        }
+                        <a href="/Contribution/Delete/@item.Id" style="padding:10px"><i class="material-icons" style="color :red">delete</i> </a>
+                    }
+
+
+
+
+
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+
+            },
+            data: {
+
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+
+
+
+
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            ////MakeSelect2("#Month", "Select Month", "/api/data", false, "Month", 9, "")
+            ////MakeSelect2("#Member", "Select Member", "/api/data", false, "Member", 9, "")
+            ////MakeSelect2("#Branch", "Select Branch", "/api/data", false, "Branch", 9, "")
+            ////MakeSelect2("#Circle", "Select Circle", "/api/data", false, "Circle", 9, "")
+
+
+        });
+
+
+
+
+        function CreateTable(data) {
+
+        }
+
+    </script>
+
+
+
+}

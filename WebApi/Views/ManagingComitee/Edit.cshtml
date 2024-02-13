@@ -1,0 +1,157 @@
+﻿@model DTO.ManagingComiteeDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="form-heading">Edit Managing Committee</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label"> Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Position" id="lbl_Position" class="control-label">Position</label>
+        </div>
+        <div class=" col-4">
+            <input id="Position" name="Position" v-model="dataModel.position" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="order" id="lbl_order" class="control-label">order</label>
+        </div>
+        <div class=" col-4">
+            <input id="order" name="order" v-model="dataModel.order" type="number" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description1" id="lbl_Description1" class="control-label">Description1</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description1" name="Description1" v-model="dataModel.description1" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description2" id="lbl_Description2" class="control-label">Description2</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description2" name="Description2" v-model="dataModel.description2" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="imageLocation" id="lbl_imageLocation" class="control-label">imageLocation</label>
+        </div>
+        <div class=" col-4">
+            <input id="imageLocation" name="imageLocation" v-model="dataModel.imageLocation" type="text" class="form-control" />
+        </div>
+    </div>
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Managing Committee',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("Managing Committee Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Managing Committee Name required.");
+                    }
+                    if (!this.dataModel.position) {
+                        this.errors.push(" Managing Committee position required.");
+                    }
+                    if (!this.dataModel.order) {
+                        this.errors.push(" Managing Committee order required.");
+                    }
+                    if (!this.dataModel.description1) {
+                        this.errors.push(" Managing Committee description required.");
+                    }
+                    if (!this.dataModel.description2) {
+                        this.errors.push(" Managing Committee description required.");
+                    }
+                    if (!this.dataModel.imageLocation) {
+                        this.errors.push(" Managing Committee imageLocation required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

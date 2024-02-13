@@ -1,0 +1,24 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["Controller"].ToString();
+    string layout = null;
+    if (controller.Trim() .ToLower () == "Home".Trim (). ToLower ())
+    {
+        layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (controller.Trim().ToLower() == "MemberArea".Trim().ToLower())
+    {
+        //if (int.Parse(TempData["UserRole"].ToString()) == 3)
+        //{
+
+        //}
+        //else
+        //{ }
+        layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    }
+    Layout = layout;
+}

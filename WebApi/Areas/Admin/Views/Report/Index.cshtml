@@ -1,0 +1,406 @@
+﻿@{ ViewData["Title"] = "Index"; }
+@section Styles{
+    <style>
+    </style>
+
+
+}
+
+
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+
+
+
+
+
+
+<hr />
+
+
+
+<div class="form-group row">
+    <label for="Type" class="col-4 col-form-label">Report Type</label>
+    <div class="col-6">
+
+        <v-select :options="reports" :reduce="report => report.code" v-model="report"></v-select>
+
+
+    </div>
+</div>
+<div class="form-group row">
+    <label for="Year" class="col-4 col-form-label">Year</label>
+    <div class="col-6">
+
+
+        <v-select :options="years" :reduce="year => year.code" v-model="year"></v-select>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Month</label>
+    <div class="col-6">
+
+        <v-select :options="months" :reduce="month => month.code" v-model="month"></v-select>
+
+        @*<v-select :options="months" label="text" :reduce="months => months.id"  v-model="month"></v-select>*@
+
+    </div>
+</div>
+<div class="form-group row">
+    <label for="circle" class="col-4 col-form-label">Circle</label>
+    <div class="col-6">
+        @*<v-select :options="circles" :reduce="circle => circle.code" v-model="circle"></v-select>*@
+        <v-select :options="circles" :reduce="circle => circle.code" label="label"  @@search="onCircleSearch"></v-select>
+
+
+    </div>
+</div>
+@*<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Branch</label>
+    <div class="col-6">
+
+        <v-select :options="branches" :reduce="branch => branch.code" v-model="branch"></v-select>
+
+    </div>
+</div>*@
+
+
+<div class="form-group row">
+    <div class="form-group col-4">
+        <label for="DpCode" id="lbl_DpCode" class="control-label">DpCode</label>
+    </div>
+    <div class=" col-6">
+
+        <input id="branch" name="branch" v-model="branch" type="hidden" />
+        @*<v-select :options="dpCodes" :reduce="dpCode => dpCode.code" v-model="dataModel.dpCode"></v-select>*@
+        <v-select :options="dpCodes" :reduce="dpCode => dpCode.code" label="label"  @@search="onDpCodeSearch" v-model="branch"></v-select>
+  
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="select" class="col-4 col-form-label">Member</label>
+    <div class="col-6">
+        <v-select :options="members" :reduce="member => member.code" label="label"  @@search="onMemeberSearch" v-model="member"></v-select>
+
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <div class="offset-4 col-6">
+
+
+        <button id="submit1" name="submit" type="button" v-on:click="ShowData()" class="btn btn-primary">Show </button>
+
+    </div>
+</div>
+
+
+<div id="showData">
+
+</div>
+
+<hr />
+
+
+
+
+@section Scripts {
+
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.GetReportDropDowns();
+                this.GetMonthDropDowns();
+                this.GetCircleDropDowns();
+                //this.GetBranchDropDowns();
+                this.GetYearDropDowns();
+                this.GetMemberDropDowns("");
+                this.GenerateDropDowns('BRANCH', "")
+            },
+            data: {
+                years: [],
+                months: [],
+                members: [],
+                reports: [],
+                circles: [],
+                branches: [],
+                dpCodes: [],
+                totalentry: 0,
+                totalamount: 0,
+                datatab: null,
+                dataModel: null,
+                report: 0,
+                year: 0,
+                month: 0,
+                circle: 0,
+                member: 0,
+                branch: 0,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id) {
+                        this.errors.push("Category Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Category Name required.");
+                    }
+                    if (!this.dataModel.abbreviation) {
+                        this.errors.push(" Category Code required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+
+                GetReportDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'REPORT');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.reports = response.data.items;
+                            console.log(this.reports);
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                GetMonthDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MONTH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.months = response.data.items;
+                            console.log("this.months");
+                            console.log(this.months);
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                GetYearDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'YEAR');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.years = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+                GetCircleDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'CIRCLE');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.circles = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+             
+
+                GetMemberDropDowns: function (search) {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MEMBER');
+                    bodyFormData.append('q', search);
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.members = response.data.items;
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+
+                ShowData: function () {
+                    $.blockUI();
+                    this.dataModel = null;
+
+                    axios.get('/Admin/Report/GetReportData?type=' + this.report + '&Year=' + this.year + '&Month=' + this.month + '&Member=' + this.member + '&Branch=' + this.branch + '&Circle=' + this.circle + '').then(response => {
+
+
+
+                        if (response.data.items.length > 0) {
+                            var itemsdata = JSON.parse(response.data.items)
+                            var k = itemsdata.items;
+                            document.title = itemsdata.reportname;
+                            fillData(k, itemsdata.reportname);
+                        }
+                        else {
+                            ShowInfoNotification("No Data Available !!");
+                        }
+                        //this.dataModel = response.data.items;
+                        //this.totalentry = this.dataModel.length;
+                        //if (this.totalentry > 0) {
+
+                        //    this.totalamount = this.dataModel.map(item => item.amount).reduce((total, amount) => eval(total) + eval(amount));
+                        //}
+                        // this.initDatatable();
+                        $.unblockUI();
+                        console.log(this.dataModel);
+                    });
+
+                },
+
+                onMemeberSearch(search, loading) {
+
+                    this.GetMemberDropDowns(search)
+
+
+                },
+
+
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+    <script>
+        $(document).ready(function () {
+
+
+        });
+
+
+
+
+
+        function fillData(result, reporttype) {
+            if ($.fn.DataTable.isDataTable('#dynamictable')) {
+                $('#dynamictable').DataTable().destroy();
+            }
+
+            $('#dynamictable').empty();
+            var myData = JSON.parse(result);
+
+
+
+
+            if (myData.length > 0) {
+                var col = [];
+                col = Object.keys(myData[0]);
+                let table = '<table id="dynamictable" class="table table-responsive table-stripped"><thead>';
+                table = table + '<th colspan=' + col.length + '>' + reporttype + ' </th>'
+                table = table + '<tr>';
+                let Allth = "";
+                for (let i = 0; i < col.length; i++) {
+                    let str = col[i].toString();
+                    str = str.substring(str.indexOf("_") + 1);
+                    let th = '<th>' + str + '</th>';
+                    Allth = Allth + th;
+                }
+
+                table = table + Allth + '</tr></thead><tbody>';
+                let rowhtml = ""
+                for (let i = 0; i < myData.length; i++) {
+                    rowhtml = rowhtml + '<tr>';
+                    let colCount = col.length;
+                    let Alltd = "";
+                    for (let j = 0; j < colCount; j++) {
+                        let colname = col[j].toString();
+                        let colvalue = myData[i][colname];
+                        let td = '<td>' + colvalue + '</td>';
+                        Alltd = Alltd + td;
+                    }
+                    rowhtml = rowhtml + Alltd;
+                    rowhtml = rowhtml + "</tr>";
+                }
+
+                rowhtml = rowhtml + '</tbody>';
+
+                table = table + rowhtml + '</table>';
+
+                var divContainer = document.getElementById("showData");
+                divContainer.innerHTML = table;
+
+                $('#dynamictable').dataTable({
+                    "scrollX": true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            }
+            else {
+                ShowInfoNotification("No Data Available !!");
+            }
+
+        }
+    </script>
+
+}

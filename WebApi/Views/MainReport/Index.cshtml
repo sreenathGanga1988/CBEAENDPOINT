@@ -1,0 +1,66 @@
+﻿
+@{ ViewData["Title"] = "Index"; }
+
+@section Styles{
+
+   
+
+}
+<h2 class="form-heading">Main Report</h2>
+    <partial name="/Views/Shared/_NotificationBox.cshtml" />
+    <partial name="/Views/Shared/_ListView.cshtml" />
+
+
+
+
+
+
+
+    @section Scripts {
+
+
+
+        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.min.js"></script>
+        <script src="~/lib/datatables-buttons/js/buttons.flash.min.js"></script>
+        <script src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+        <script src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+        <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+        <script src="~/lib/jszip/jszip.min.js"></script>
+        <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+        <script>
+    var ColumnHeader =  @Json.Serialize((Model.ColumnHeaders));
+    var Columns =  @Json.Serialize((Model.Columns));
+    var dataModels =  @Json.Serialize((Model.MainReports));
+
+
+    var IdColumn ="id";
+            var EditAction = "/MainReport/Edit";
+            var ViewAction = "/MainReport/Details";
+            var DeleteAction = "/MainReport/Delete";
+            var AddAction = "/MainReport/Create";
+        $(document).ready(function () {
+
+            LoadData();
+            MarkasDatatable("");
+        });
+
+
+
+
+
+
+        </script>
+
+
+
+
+    }
+
+
+
+
+
+

@@ -1,0 +1,129 @@
+﻿@model DTO.SupportTicketDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2 class="form-heading">Delete Branch</h2>
+
+<hr />
+
+<form asp-action="Delete">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="SupportTicketNum" id="lbl_SupportTicketNum" class="control-label">Support Ticket Number</label>
+        </div>
+        <div class=" col-4">
+            <input id="SupportTicketNum" name="SupportTicketNum" v-model="dataModel.supportTicketNum" type="number" maxlength="150" required class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Priority" id="lbl_Priority" class="control-label">Priority</label>
+        </div>
+        <div class=" col-4">
+            <select class="form-control" name="Priority" id="Priority" disabled>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="Emergency">Emergency</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Duration" id="lbl_Duration" class="control-label">Duration (in hours)</label>
+        </div>
+        <div class=" col-4">
+            <input id="Duration" name="Duration" v-model="dataModel.duration" type="number" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description" id="lbl_Description" class="control-label">Description</label>
+        </div>
+        <div class=" col-4">
+            <textarea rows="4" cols="50" id="Description" name="Description" v-model="dataModel.description" class="form-control" required disabled ></textarea>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DeveloperRemark" id="lbl_DeveloperRemark" class="control-label">Developer Remark</label>
+        </div>
+        <div class=" col-4">
+            <textarea rows="4" cols="50" id="DeveloperRemark" name="DeveloperRemark" v-model="dataModel.developerRemark" class="form-control" required disabled ></textarea>
+        </div>
+    </div>
+
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Delete" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                 checkForm: function (e) {
+                    this.errors = [];
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

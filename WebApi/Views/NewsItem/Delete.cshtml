@@ -1,0 +1,100 @@
+﻿@model DTO.NewsItemDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+    <h2 class="form-heading">Delete News</h2>
+<hr />
+
+<form asp-action="Delete">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DateofAction" id="lbl_DateofAction" class="control-label">Date of action</label>
+        </div>
+        <div class=" col-4">
+            <input id="DateofAction" name="DateofAction" v-model="moment(dataModel.dateofAction).format('YYYY-MM-DD')" type="date" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NewsLink" id="lbl_NewsLink" class="control-label">News Link</label>
+        </div>
+        <div class=" col-4">
+            <input id="NewsLink" name="NewsLink" v-model="dataModel.newsLink" type="text" class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NewsText" id="lbl_NewsText" class="control-label">News Text</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="NewsText" name="NewsText" v-model="dataModel.newsText" type="text" required class="form-control" disabled></textarea>
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Delete" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'MainPage',
+                    };
+                }
+            },
+            methods: {
+                 checkForm: function (e) {
+                    this.errors = [];
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  , 
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

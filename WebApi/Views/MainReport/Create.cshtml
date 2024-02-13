@@ -1,0 +1,116 @@
+﻿@model DTO.MainReportDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="form-heading">Create Main Report</h2>
+<hr />
+
+<form asp-action="Create">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" maxlength="150" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description" id="lbl_Description" class="control-label">Description</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description" name="Description" v-model="dataModel.description" type="text" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="SQLString" id="lbl_SQLString" class="control-label">SQLString</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="SQLString" name="SQLString" v-model="dataModel.sQLString" type="text" cols="15" rows="15" class="form-control" required></textarea>
+        </div>
+    </div>
+
+
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary btn-md center-block" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+    </div>
+    <hr />
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+
+<div>
+   
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+     
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                 
+                    if (!this.dataModel.name) {
+                        this.errors.push(" MainReport Name required.");
+                    }
+                    if (!this.dataModel.description) {
+                        this.errors.push(" MainReport description required.");
+                    }
+                    if (!this.dataModel.sQLString) {
+                        this.errors.push(" MainReport SQLString required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,          
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

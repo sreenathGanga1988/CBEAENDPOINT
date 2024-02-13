@@ -1,0 +1,50 @@
+@model IEnumerable<DTO.ContributionMasterDTO>
+@{
+    ViewData["Title"] = "Contribution";
+
+}
+
+<h2 class="form-heading">Contribution Approval</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead><tr><th>Year</th><th>Month</th><th>Circle</th><th>Total Amount</th><th>Total Entry</th><th>New Member Count</th><th>Contribution Status</th></tr></thead>
+    <tbody>
+        @foreach (var element in Model)
+        {
+
+        <tr>
+          
+
+            <td> @element.Year    </td>
+            <td> @element.Month  </td>
+            <td> @element.Circle  </td>
+            <td>@element.totalamount    </td>
+            <td>@element.totalentry </td>
+            <td>@element.NewMemberCount </td>
+            <td>@element.ContributionStatus </td>
+            <td>
+
+                <a class="btn btn-primary" href="~/Admin/Approval/Approve?id=@element.Id&type=A&tag=PendingContribution" style="">
+
+                    <span class="material-icons">
+                        thumb_up_alt
+                    </span>
+                </a>
+                <a class="btn btn-danger" href="~/Admin/Approval/Approve?id=@element.Id&type=R&tag=PendingContribution">
+
+                    <span class="material-icons">
+                        thumb_down_alt
+                    </span>
+                </a>
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<div>
+    <a href="~/Admin/Approval" class="BacktoList"> &laquo; Back to List</a>
+</div>

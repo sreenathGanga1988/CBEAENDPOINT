@@ -1,0 +1,165 @@
+﻿@model DTO.BranchDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2 class="form-heading">Delete Branch</h2>
+
+<hr />
+
+<form asp-action="Delete">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" >
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Branch Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DPCode" id="lbl_DPCode" class="control-label">DPCode</label>
+        </div>
+        <div class=" col-4">
+            <input id="DPCode" name="DPCode" v-model="dataModel.dpCode" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="CircleId" id="lbl_CircleId" class="control-label">Circle </label>
+        </div>
+        <div class=" col-4">
+            <input id="CircleId" name="CircleId" v-model="dataModel.circleId" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="StateId" id="lbl_StateId" class="control-label">State </label>
+        </div>
+        <div class=" col-4">
+            <input id="StateId" name="StateId" v-model="dataModel.stateId" type="text" class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Address1" id="lbl_Address1" class="control-label">Address1</label>
+        </div>
+        <div class=" col-4">
+            <input id="Address1" name="Address1" v-model="dataModel.address1" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Address2" id="lbl_Address2" class="control-label">Address2</label>
+        </div>
+        <div class=" col-4">
+            <input id="Address2" name="Address2" v-model="dataModel.address2" type="text" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Address3" id="lbl_Address3" class="control-label">Address3 </label>
+        </div>
+        <div class=" col-4">
+            <input id="Address3" name="Address3" v-model="dataModel.address3" type="text" class="form-control" disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="District" id="lbl_District" class="control-label">District</label>
+        </div>
+        <div class=" col-4">
+            <input id="District" name="District" v-model="dataModel.district" type="text" class="form-control" required disabled />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group form-check col-4">
+
+
+            <input type="checkbox" id="IsActive" name="IsActive" v-model="dataModel.isActive" disabled>
+            <label for="checkbox">Active ??</label>
+
+
+        </div>
+
+        <div class="form-group form-check col-4">
+
+            <input type="checkbox" id="IsRegCompleted" name="IsRegCompleted" v-model="dataModel.isRegCompleted" disabled>
+            <label for="checkbox">Registration Completed ??</label>
+
+
+
+        </div>
+    </div>
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Delete" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+
+    </div>
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                 checkForm: function (e) {
+                    this.errors = [];
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

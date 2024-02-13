@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+
+
+@section Styles{
+    <style>
+
+
+        .button {
+            display: inline-block;
+            padding: 10px 22px;
+            font-size: 21px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #2e618c;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+            .button:hover {
+                background-color: #3e82bb;
+                color: white;
+                text-decoration: none;
+            }
+
+            .button:active {
+                background-color: #2e618c;
+                box-shadow: 0 5px #666;
+                transform: translateY(4px);
+            }
+
+        .form-heading {
+            text-align: center;
+            color: white;
+            background-color: #2e618c;
+            text-shadow: 2px 2px 4px #000000;
+            box-shadow: 8px 8px 3px grey;
+        }
+    </style>
+
+
+}
+
+<h2 class="form-heading">Approval</h2>
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+
+
+
+
+<a href="/Admin/Approval/DirectEntryApproval/" id="addbtn" class="button"> Direct Entry</a>
+
+<a href="/Admin/Approval/UserApproval/" id="adddirbtn" class="button"> User Approval </a>
+
+<a href="/Admin/Approval/ContributionApproval/" id="adddirbtn" class="button"> Contribution Approval </a>
+<hr />
+
+
+<table class="table table-striped">
+    <thead><tr><th>ID</th><th>Field</th><th>Pending</th><th>Action</th></tr></thead>
+    <tbody>
+
+        <tr>
+
+            <td> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DTO.AccountsDirectEntryDTO>
+@{
+    ViewData["Title"] = "AccountsDirectEntryDTO";
+
+}
+
+<h2 class="form-heading">Direct Contribution Approval</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead><tr><th>Name</th><th>DpCode</th><th>Staff num</th><th>Amount</th><th>Action</th></tr></thead>
+    <tbody>
+        @foreach (var element in Model)
+        {
+        <tr>
+
+            <td> @element.Name   </td>
+            <td> @element.DpCode   </td>
+            <td> @element.StaffNo  </td>
+            <td>@element.Amt    </td>
+            <td>
+
+
+
+                <a class="btn btn-primary" href="~/Admin/Approval/Approve?id=5&type=A&tag=PendingDirectContribution" style="">
+
+                    <span class="material-icons">
+                        thumb_up_alt
+                    </span>
+                </a>
+                <a class="btn btn-danger" href="~/Admin/Approval/Approve?id=5&type=R&tag=PendingDirectContribution">
+
+                    <span class="material-icons">
+                        thumb_down_alt
+                    </span>
+                </a>
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<div>
+    <a href="~/Admin/Approval" class="BacktoList"> &laquo; Back to List</a>
+</div>
+

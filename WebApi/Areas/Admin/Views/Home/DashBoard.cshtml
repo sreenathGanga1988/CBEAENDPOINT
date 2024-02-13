@@ -1,0 +1,214 @@
+﻿<div style="width:80%;height:20%">
+    <h2>Yearly Contribution  </h2>
+    <canvas id="myChart"></canvas>
+
+</div>
+<div style="width:80%;height:20%">
+    <h2>Yearly Contributions  </h2>
+    <canvas id="myChart2"></canvas>
+
+</div>
+<div style="width:80%;height:20%">
+    <h2>Current Year (2022) </h2>
+    <canvas id="myChart3"></canvas>
+
+</div>
+@section Scripts {
+
+    <script>
+
+
+    window.onload = function () {
+    //let Labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+    //let element = document.getElementById('myChart');
+    //LoadChar(element, Labels);
+
+    //element = document.getElementById('myChart2');
+
+    }
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+
+
+                this.GetData();
+                this.GetData2();
+                this.GetData3();
+            },
+            data: {
+
+                errors: [],
+                states: [],
+                circles: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+
+
+
+                GetData: function () {
+
+                    axios({
+                        method: 'get',
+                        url: '/api/dashboard/YEARCONTR',
+                         headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+
+
+                            let ctx = document.getElementById('myChart').getContext('2d');
+                            
+
+
+                            var myChart = new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                      labels: response.data.label,
+                      datasets: [{
+                      label: 'Total Contribution',
+                      data:response.data.data,
+                      borderWidth: 1
+                      }]
+                      },
+                      options: {
+                      scales: {
+                      yAxes: [{
+                      ticks: {
+                      beginAtZero: true
+                      }
+                      }]
+                      }
+                      }
+                      });
+
+
+                        })
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                GetData2: function () {
+
+                    axios({
+                        method: 'get',
+                        url: '/api/dashboard/YEARCONTR',
+                         headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+
+
+                            let ctx = document.getElementById('myChart2').getContext('2d');
+                            
+
+
+                            var myChart = new Chart(ctx, {
+                      type: 'line',
+                      data: {
+                      labels: response.data.label,
+                      datasets: [{
+                          label: 'Total Contribution',
+                      data:response.data.data,
+                      borderWidth: 1
+                      }]
+                      },
+                      options: {
+                      scales: {
+                      yAxes: [{
+                      ticks: {
+                      beginAtZero: true
+                      }
+                      }]
+                      }
+                      }
+                      });
+
+
+                        })
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+
+                GetData3: function () {
+
+                    axios({
+                        method: 'get',
+                        url: '/api/dashboard/CurrentYear',
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+
+
+                            let ctx = document.getElementById('myChart3').getContext('2d');
+                            
+
+
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: response.data.label,
+                                    datasets: [{
+                                        label: 'Total Contribution',
+                                        data: response.data.data,
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+
+
+                        })
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+
+
+
+
+}
+
+

@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CBEU</title>
+
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables.net-buttons-bs4/buttons.bootstrap4.css" rel="stylesheet" />
+    <link href="~/lib/noty/noty.min.css" rel="stylesheet" />
+    <script src="~/js/_listView.js" asp-append-version="true"></script>
+
+    <link href="~/css/simple-sidebar.css" rel="stylesheet" />
+    <link href="~/css/form_style.css" rel="stylesheet" />
+    @*<link href="~/lib/select2/css/select2.css" rel="stylesheet" />*@
+    <link href="~/lib/vue-select/vue-select.css" rel="stylesheet" />
+</head>
+<body>
+
+    @RenderSection("Styles", false)
+
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right noprint" id="sidebar-wrapper">
+            <div class="sidebar-heading"><img src="~/images/CBEU.jpg" alt="CBEU" style="float:left; width:12vh;border-radius: 5vh;" ;> </div>
+            <div class="list-group list-group-flush">
+                <a href="/Admin/Home/Dashboard" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+
+              @*  <a href="/category" class="list-group-item list-group-item-action bg-light">Categories</a>*@
+                <a href="/UserType" class="list-group-item list-group-item-action bg-light">User Types</a>
+                <a href="/User" class="list-group-item list-group-item-action bg-light">Users</a>
+
+                <a href="/State" class="list-group-item list-group-item-action bg-light">States</a>
+                <a href="/Circle" class="list-group-item list-group-item-action bg-light">Circles</a>
+                <a href="/Branch" class="list-group-item list-group-item-action bg-light">Branches</a>
+                <a href="/Designation" class="list-group-item list-group-item-action bg-light">Designations</a>
+                <a href="/Member/IndexActive" class="list-group-item list-group-item-action bg-light">Members</a>
+
+
+                <a href="/Contribution" class="list-group-item list-group-item-action bg-light">Contributions</a>
+
+
+
+                <a href="/MainPage" class="list-group-item list-group-item-action bg-light">Main Page</a>
+                <a href="/Admin/Approval" class="list-group-item list-group-item-action bg-light">Approval</a>
+                <a href="/Admin/Report" class="list-group-item list-group-item-action bg-light">Report</a>
+
+
+                <a href="/SupportTicket" class="list-group-item list-group-item-action bg-light">Support Requests</a>
+                <a href="/MainReport" class="list-group-item list-group-item-action bg-light">Report Engine</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom noprint">
+                <button class="btn btn-primary" id="menu-toggle">&#9776;</button>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/Admin/Home/Profile">Profile</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/home/Logout">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div class="container-fluid">
+                <div id="vueAppTemplate">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
+    @*<script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>*@
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Vue_mixin.js"></script>
+    <script src="~/js/form.js" asp-append-version="true"></script>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="~/lib/jquery.blockUI/jquery.blockUI.js"></script>
+    @*<script src="~/lib/select2/js/select2.js"></script>*@
+    <script src="~/lib/vue-select/vue-select.js"></script>
+    <script src="~/lib/axios/axios.min.js"></script>
+    <script src="~/lib/moment.js/moment.js"></script>
+
+    <script src="~/lib/Chart.js/Chart.bundle.min.js"></script>
+    <link href="~/lib/Chart.js/Chart.css" rel="stylesheet" />
+    <script src="~/lib/noty/noty.min.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        Vue.component('v-select', VueSelect.VueSelect)
+        var app = new Vue({
+            el: '#vueAppTemplate',
+            mixins: mixinArray,    //defined in site.js
+            data: {
+                moment: moment,
+                appMessage: 'Hello World'
+                //add more data properties here
+            },
+            methods: {
+                //add methods here
+
+                SayHi: function (search) {
+                    alert("Hi")
+                },
+            }
+        });
+        $(".alert").delay(5000).slideUp(200, function () {
+            $(this).alert('close');
+        });
+    </script>
+
+    <script>
+        //$(document).ready(function () {
+        //    $.blockUI();
+        //});
+        //$(window).load(function () {
+        //    $.unblockUI();
+        //});
+
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+
+
+
+        function ShowErrorNotification(msg) {
+            ShowNotify(msg, "error");
+        }
+        function ShowSuccessNotification(msg) {
+            ShowNotify(msg, "success");
+        }
+
+        function ShowInfoNotification(msg) {
+            ShowNotify(msg, "info");
+
+          
+        }
+
+        function ShowWarningNotification(msg) {
+            ShowNotify(msg, "info");
+
+            
+        }
+        function printDiv(obj) {
+            $("#wrapper").toggleClass("toggled");
+            window.print()
+        }
+        function ShowNotify(msg , type) {
+
+            new Noty({
+                type: type,
+                layout: 'topRight',
+                theme: 'mint',
+                text: msg,
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+                killer: true,
+                callbacks: {
+                    beforeShow: function () {
+
+                    },
+                    onShow: function () {
+
+                    },
+                    onHover: function () {
+
+                    },
+                    onClick: function () {
+
+                    },
+                    onClose: function () {
+
+                    }
+                },
+            }).show();
+
+        }
+    </script>
+
+
+   
+</body>
+</html>

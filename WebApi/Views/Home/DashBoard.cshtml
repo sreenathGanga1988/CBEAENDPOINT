@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Downloads";
+}
+@section Styles{
+    <style>
+        .user-profile {
+            line-height: 3rem;
+        }
+
+        .row:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.05);
+            overflow: hidden;
+        }
+
+        .container {
+            border: 1px solid grey;
+        }
+
+        h1 {
+            color: darkblue;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .user-form {
+            color: darkblue;
+            font-weight: bold;
+        }
+    </style>
+}
+<partial name="/Views/Shared/_NotificationBox.cshtml" />
+<partial name="/Views/Shared/_ProfileView.cshtml" model='@Model' />
+
+
+
+
+

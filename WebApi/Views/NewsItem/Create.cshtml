@@ -1,0 +1,118 @@
+﻿@model DTO.NewsItemDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="form-heading">Create News</h2>
+<hr />
+
+<form asp-action="Create">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    @*<input type="hidden" asp-for="DateofAction" />*@
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="Id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="DateofAction" id="lbl_DateofAction" class="control-label">Date of action</label>
+        </div>
+        <div class=" col-4">
+            <input id="DateofAction" name="DateofAction" v-model="dataModel.dateofAction" type="date" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NewsLink" id="lbl_NewsLink" class="control-label">News Link</label>
+        </div>
+        <div class=" col-4">
+            <input id="NewsLink" name="NewsLink" v-model="dataModel.newsLink" type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="NewsText" id="lbl_NewsText" class="control-label">News Text</label>
+        </div>
+        <div class=" col-4">
+            <textarea id="NewsText" name="NewsText" v-model="dataModel.newsText" type="text" required class="form-control"></textarea>
+        </div>
+    </div>
+
+
+
+
+
+
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+
+        </div>
+        </div>
+        <hr />
+
+        <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+     
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                colvalue = moment(new Date(colvalue)).format("DD/MMM/YYYY");
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'MainPage',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.dataModel.dateofAction) {
+                        this.errors.push(" Date required.");
+                    }
+                    if (!this.dataModel.newsText) {
+                        this.errors.push(" News required.");
+                    }
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,          
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

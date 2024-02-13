@@ -1,0 +1,37 @@
+﻿@model DTO.FileUploadDetailDTOList
+@{
+    ViewData["Title"] = "Downloads";
+}
+@section Styles{
+    <style>
+        
+    </style>
+    }
+
+
+<div class="container">
+    <h2 class="form-heading">Download Files</h2>
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>File Description</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.FileUploadDetails)
+            {
+<tr>
+    <td>@item.Filename</td>
+    <td>@item.FileDesription.</td>
+    <td><a href="@item.FileRelativeLocation "><i class="material-icons" style=" color: blue">get_app</i> </a></td>
+</tr>
+}
+
+
+        </tbody>
+    </table>
+
+</div>

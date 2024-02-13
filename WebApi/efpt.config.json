@@ -1,0 +1,129 @@
+﻿{
+   "CodeGenerationMode": 1,
+   "ContextClassName": "DB_A424F9_GjcbeuContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": "Domain.Entities",
+   "OutputContextPath": "TestModels",
+   "OutputPath": "TestModels",
+   "ProjectRootNamespace": "WebApi",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Accounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AccountsDirectEntry]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Branch]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Category]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Circle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CircleState]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ContributionDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ContributionMasters]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CustomErrorLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DayQuotes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MainPages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MainReports]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ManagingComitees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Member]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MemberDefaultTemp]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Month]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NewsItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[State]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SupportTickets]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Transfer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[YearMasters]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "sreenath-pc\\sqlexpress.DB_A424F9_gjcbeu.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

@@ -1,0 +1,81 @@
+﻿@model DTO.DesignationDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <h2 class="form-heading">Designation Details</h2>
+<hr />
+
+    <form>
+        <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+        <div class="row justify-content-center">
+
+
+            <div class="form-group col-4">
+                <label id="lbl_Id" class="control-label">Id</label>
+            </div>
+            <div class=" col-4">
+                <input id="Id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-4">
+                <label for="Name" id="lbl_Name" class="control-label">Designation Name</label>
+            </div>
+            <div class=" col-4">
+                <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-4">
+                <label for="Description" id="lbl_Description" class="control-label">Designation Description</label>
+            </div>
+            <div class=" col-4">
+                <input id="Description" name="Description" v-model="dataModel.description" type="text" class="form-control" disabled />
+            </div>
+
+        </div>
+
+
+        <hr />
+
+
+
+
+        <partial name="/Views/Shared/_AuditView.cshtml" />
+    </form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+              
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

@@ -1,0 +1,158 @@
+﻿@model DTO.DayQuoteDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h2 class="form-heading">Edit Day Quote</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Day" id="lbl_Day" class="control-label">Day</label>
+        </div>
+        <div class=" col-4">
+            <input id="Day" name="Day" v-model="dataModel.day" type="number" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="MonthCode" id="lbl_MonthCode" class="control-label">Month</label>
+        </div>
+        <div class=" col-4">
+           
+            <input id="MonthCode" name="MonthCode" v-model="dataModel.monthCode" type="hidden" />
+            <v-select :options="months" :reduce="month => month.code" v-model="dataModel.monthCode"></v-select>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="ToDayQuote" id="lbl_ToDayQuote" class="control-label">ToDayQuote</label>
+        </div>
+        <div class=" col-4">
+            <input id="ToDayQuote" name="ToDayQuote" v-model="dataModel.toDayQuote" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="UnformatedContent" id="lbl_UnformatedContent" class="control-label">UnformatedContent</label>
+        </div>
+        <div class=" col-4">
+            <input id="UnformatedContent" name="UnformatedContent" v-model="dataModel.unformatedContent" type="text" required class="form-control" />
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+                this.GetMonthDropDowns();
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                months: [],
+                function() {
+                    return {
+                        appMessage: 'DayQuote',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.day) {
+                        this.errors.push(" Day required.");
+                    }
+                    if (!this.dataModel.monthCode) {
+                        this.errors.push(" MonthCode required.");
+                    }
+                    if (!this.dataModel.toDayQuote) {
+                        this.errors.push(" ToDayQuote required.");
+                    }
+                    if (!this.dataModel.unformatedContent) {
+                        this.errors.push(" UnformatedContent required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+
+                GetMonthDropDowns: function () {
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('listType', 'MONTH');
+                    axios({
+                        method: 'post',
+                        url: '/api/data/',
+                        data: bodyFormData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                        .then(function (response) {
+                            //handle success
+                            this.months = response.data.items;
+                            this.SetSelectedmonths();
+                        }.bind(this))
+                        .catch(function (response) {
+                            //handle error
+                            console.log(response);
+                        });
+                },
+                SetSelectedmonths: function () {
+
+                    this.dataModel.monthCode = this.months.find(item => item.code == this.dataModel.monthCode)
+
+                    this.dataModel.monthCode = this.dataModel.monthCode.code
+
+                },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

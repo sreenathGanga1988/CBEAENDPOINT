@@ -1,0 +1,162 @@
+﻿@model DTO.ProfileDTO
+@{ ViewData["Title"] = "Welcome"; }
+@section Styles{
+    <style>
+        .user-profile {
+            line-height: 3rem;
+            
+        }
+
+        .row:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.05);
+            overflow: hidden;
+        }
+
+        .container-border {
+            border: 1px solid grey;
+        }
+
+        h1 {
+            color: darkblue;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .user-form {
+            color: darkblue;
+            font-weight: bold;
+        }
+       
+    </style>
+}
+
+
+
+@await Html.PartialAsync("~/Views/Shared/_NotificationBox.cshtml" )
+
+@await Html.PartialAsync("~/Views/Shared/_ProfileView.cshtml", Model)
+
+
+
+
+
+@*<div class="container">
+        <div class="user-profile">
+
+
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    StaffNo
+                </div>
+                <div class="col-4">
+                    @Model.StaffNo.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Name
+                </div>
+                <div class="col-4">
+                    @Model.Name.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Gender
+                </div>
+                <div class="col-4">
+                    @Model.Gender.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Designation
+                </div>
+                <div class="col-4">
+                    @Model.Designation.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Category
+                </div>
+                <div class="col-4">
+                    @Model.Category.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Date of Birth
+                </div>
+                <div class="col-4">
+                    @Model.DateofBirth.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Date of Join
+                </div>
+                <div class="col-4">
+                    @Model.DateofJoin.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    DpCode
+                </div>
+                <div class="col-4">
+                    @Model.DpCode.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Date From
+                </div>
+                <div class="col-4">
+                    @Model.DateFrom.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Date To
+                </div>
+                <div class="col-4">
+
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Retirement Date
+                </div>
+                <div class="col-4">
+                    @Model.RetirementDate.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Status
+                </div>
+                <div class="col-4">
+                    @Model.Status.ToString()
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 user-form">
+                    Contribution
+                </div>
+                <div class="col-4">
+
+
+                    <a href="/Home/Contribution" class="btn btn-info "><i class="material-icons" style="color :white">attach_money</i> Show Contribution </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>*@*
+
+
+
+
+

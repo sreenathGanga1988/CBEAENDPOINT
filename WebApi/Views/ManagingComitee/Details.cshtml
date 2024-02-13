@@ -1,0 +1,114 @@
+﻿@model DTO.ManagingComiteeDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="form-heading">Managing Committee Details </h2>
+<hr />
+
+<form>
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label"> Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Position" id="lbl_Position" class="control-label">Position</label>
+        </div>
+        <div class=" col-4">
+            <input id="Position" name="Position" v-model="dataModel.position" type="text" class="form-control" disabled/>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="order" id="lbl_order" class="control-label">order</label>
+        </div>
+        <div class=" col-4">
+            <input id="order" name="order" v-model="dataModel.order" type="number" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description1" id="lbl_Description1" class="control-label">Description1</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description1" name="Description1" v-model="dataModel.description1" type="text" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description2" id="lbl_Description2" class="control-label">Description2</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description2" name="Description2" v-model="dataModel.description2" type="text" class="form-control" disabled/>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="imageLocation" id="lbl_imageLocation" class="control-label">imageLocation</label>
+        </div>
+        <div class=" col-4">
+            <input id="imageLocation" name="imageLocation" v-model="dataModel.imageLocation" type="text" class="form-control" disabled/>
+        </div>
+    </div>
+
+
+
+
+
+    <hr />
+
+
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Managing Committee',
+                    };
+                }
+            },
+            methods: {
+
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

@@ -1,0 +1,102 @@
+﻿@model DTO.UserTypeDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2 class="form-heading">Delete User Type</h2>
+<hr />
+
+<form asp-action="Delete">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" >
+            <input id="ID" v-model="dataModel.id" class="form-control" type="number" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="lbl_Abbreviation" id="lbl_UserType" class="control-label">User Type</label>
+        </div>
+        <div class=" col-4">
+            <input id="Abbreviation" name="Abbreviation" v-model="dataModel.Abbreviation" type="text" required class="form-control" disabled />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Description" id="lbl_Description" class="control-label">Description</label>
+        </div>
+        <div class=" col-4">
+            <input id="Description" name="Description" v-model="dataModel.description" type="text" class="form-control" disabled/>
+        </div>
+    </div>
+
+
+
+
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Delete" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <hr />
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'User Type',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+
+
+}

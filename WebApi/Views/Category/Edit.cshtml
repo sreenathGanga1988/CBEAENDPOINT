@@ -1,0 +1,138 @@
+﻿@model DTO.CategoryDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h2 class="form-heading">Edit Category</h2>
+<hr />
+
+<form asp-action="Edit">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <input type="hidden" asp-for="CreatedDate" />
+    <input type="hidden" asp-for="CreatedByUserId" />
+    <input type="hidden" asp-for="AddedUser" />
+    <div class="row justify-content-center">
+    <div class=" form-group col-12">
+        <div class="float-right">
+            <input type="checkbox" id="IsActive" name="IsActive" class="myCheckBox" checked data-toggle="toggle" data-on="Active" data-off="Not Active" data-onstyle="success" data-offstyle="danger">
+            <input type="checkbox" id="IsDeleted" name="IsDeleted" class="myCheckBox" checked data-toggle="toggle" data-on=" Deleted" data-off="Not Deleted" data-onstyle="danger" data-offstyle="success">
+        </div>
+    </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+      <div class="form-group col-4">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4">
+            <input id="Id" name="Id" v-model="dataModel.id" class="form-control" type="number" required readonly />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Name" id="lbl_Name" class="control-label">Category Name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Name" name="Name" v-model="dataModel.name" type="text"  maxlength="150" required class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Abbreviation" id="lbl_Abbreviation" class="control-label">Code</label>
+        </div>
+        <div class=" col-4">
+            <input id="Abbreviation" name="Abbreviation" v-model="dataModel.abbreviation" type="text"  maxlength="5" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <div class="form-group form-check col-4">
+
+
+
+
+
+
+        </div>
+
+        <div class="form-group form-check col-4">
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+    <hr />
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Update" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+        </div>
+
+    </div>
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            mounted() {
+                GetUserFullNames();
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                       appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+                    if (!this.dataModel.id)
+                    {
+                        this.errors.push("Category Id is required.");
+                    }
+                    if (!this.dataModel.name) {
+                        this.errors.push(" Category Name required.");
+                    }
+                    if (!this.dataModel.abbreviation) {
+                        this.errors.push(" Category Code required.");
+                    }
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

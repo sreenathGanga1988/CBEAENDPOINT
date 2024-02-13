@@ -1,0 +1,69 @@
+﻿@model DTO.claimdata
+@{ ViewData["Title"] = "claims";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@if (Model.dt1 != null)
+{
+
+<h3 style="color:#2e618c">
+    CLAIMS - STATE WISE
+
+</h3>
+                <div class="table-responsive">
+                    <table class="table w-auto small table-condensed table-hover table-bordered table-striped tabl">
+                        <thead>
+
+                            <tr style=" background-color: #c5c5c7b0;align-content:center;align-items:center">
+                                @foreach (System.Data.DataColumn item in Model.dt1.Columns)
+                                {
+                <th>@item.ColumnName</th>}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (System.Data.DataRow item in Model.dt1.Rows)
+                            {
+            <tr>
+                @foreach (System.Data.DataColumn col in Model.dt1.Columns)
+                {
+<td>@item[col.ColumnName.ToString()]</td>
+}
+
+            </tr>}
+                        </tbody>
+                    </table>
+                </div>}
+
+@if (Model.dt2 != null)
+{
+
+<h3 style="color:#2e618c">
+    CLAIMS - DESIGNATION WISE
+
+</h3>
+                <div class="table-responsive">
+                    <table class=" table w-auto small table-condensed table-hover table-bordered table-striped">
+                        <thead>
+
+                            <tr style=" background-color: #c5c5c7b0;align-content:center;align-items:center">
+                                @foreach (System.Data.DataColumn item in Model.dt2.Columns)
+                                {
+                <th>@item.ColumnName</th>
+}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (System.Data.DataRow item in Model.dt2.Rows)
+                            {
+            <tr>
+                @foreach (System.Data.DataColumn col in Model.dt2.Columns)
+                {
+<td>@item[col.ColumnName.ToString()]</td>}
+
+            </tr>
+}
+                        </tbody>
+                    </table>
+
+                    </div>
+                    }

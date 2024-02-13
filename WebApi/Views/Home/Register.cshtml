@@ -1,0 +1,171 @@
+﻿@model DTO.UserDTO
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="Register" asp-controller="Home" method="post">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="container register-form">
+        <div class="form">
+            <div class="note">
+                <p>New User Registration </p>
+            </div>
+
+            <div class="form-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" id="UserName" name="UserName" class="form-control" v-model="UserName" placeholder="User Name *" value="" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" id="EmployeeId" name="EmployeeId" class="form-control" v-model="EmployeeId" placeholder="Employee Id *" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="password" id="Password" name="Password" class="form-control" v-model="Password" placeholder="Password *" value="" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" v-model="ConfirmPassword" placeholder="Confirm Password *" value="" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="email" id="EmailId" name="EmailId" class="form-control" v-model="EmailId" placeholder="Email id *" value=""  />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" id="PhoneNum" name="PhoneNum" class="form-control" v-model="PhoneNum" placeholder="Phone No *" value=""  />
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row ">
+
+                    <input type="submit" v-on:click="checkForm" value="Register" class="btn btnReg" />
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</form>
+
+@section Styles
+{
+    <style>
+
+        .note {
+            text-align: center;
+            height: 80px;
+            background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+            color: #fff;
+            font-weight: bold;
+            line-height: 80px;
+            font-size: 20px;
+        }
+
+        .form-content {
+            padding: 5%;
+            border: 1px solid #ced4da;
+            margin-bottom: 2%;
+        }
+
+        .form-control {
+            border-radius: 1.5rem;
+        }
+
+        .btnReg {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 1%;
+            width: 20%;
+            cursor: pointer;
+            background: #0062cc;
+            color: #fff;
+            padding-bottom: 0.5rem;
+        }
+
+            .btnReg:hover {
+                color: orange !important;
+            }
+
+        .form-group {
+            padding-bottom: 0.5rem;
+        }
+    </style>
+}
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+
+            },
+            data: {
+                UserName: '',
+                Password: '',
+                ConfirmPassword: '',
+                EmailId: '',
+                PhoneNum: '',
+                EmployeeId: '',
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.UserName) {
+                        this.errors.push(" User Name required.");
+                    }
+                    if (!this.Password) {
+                        this.errors.push(" Password required.");
+                    }
+                    if (!this.ConfirmPassword) {
+                        this.errors.push(" Password confirm required.");
+                    }
+                    if (!this.EmployeeId) {
+                        this.errors.push(" Employee Id required.");
+                    }
+                    
+                    if (!((this.Password) == (this.ConfirmPassword))) {
+                        this.errors.push(" Password mismatch.");
+                    }
+
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+                },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+
+
+
+    </script>
+}

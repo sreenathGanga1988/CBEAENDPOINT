@@ -1,0 +1,159 @@
+﻿@model DTO.FileUploadDetailDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <h2 class="form-heading">Create File Upload </h2>
+<hr />
+
+<form asp-action="Create" enctype="multipart/form-data">
+    <partial name="/Views/Shared/_ErrorBox.cshtml" />
+
+    <div class="row justify-content-center">
+
+
+        <div class="form-group col-4" style="display:none">
+            <label id="lbl_Id" class="control-label">Id</label>
+        </div>
+        <div class=" col-4" style="display:none">
+            <input id="id" v-model="dataModel.id" class="form-control" type="number" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="Filename" id="lbl_Filename" class="control-label">File name</label>
+        </div>
+        <div class=" col-4">
+            <input id="Filename" name="Filename" v-model="dataModel.filename" type="text" required class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="FileDesription" id="lbl_FileDesription" class="control-label">File Desription</label>
+        </div>
+        <div class=" col-4">
+            <input id="FileDesription" name="FileDesription" v-model="dataModel.fileDesription" type="text" class="form-control" required />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="FileType" id="lbl_FileType" class="control-label">File Type</label>
+        </div>
+        <div class=" col-4">
+
+            <select name="FileType" id="FileType" v-model="dataModel.fileType" class="form-control" required>
+                <option value="PDF">PDF</option>
+                <option value="Text">Text</option>
+                <option value="Image">Image</option>
+                <option value="Doc">Doc</option>
+            </select>
+        </div>
+    </div>
+    <!--- <div class="row justify-content-center">
+         <div class="form-group col-4">
+             <label for="FileLocation" id="lbl_FileLocation" class="control-label">File Location </label>
+         </div>
+         <div class=" col-4">
+             <input id="FileLocation" name="FileLocation" v-model="dataModel.fileLocation" type="text" class="form-control" />
+         </div>
+     </div> --->
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="isPublic" id="lbl_isPublic" class="control-label">isPublic </label>
+        </div>
+        <div class=" col-4">
+
+            <select name="isPublic" id="isPublic" v-model="dataModel.isPublic" class="form-control" required>
+                <option value="True">Yes</option>
+                <option value="False">No</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="form-group col-4">
+            <label for="files" id="lbl_files" class="control-label">File Upload </label>
+        </div>
+        <div class=" col-4">
+
+            <input id="files" name="files" type="file" class=" " required />
+
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+
+
+    <div class="row justify-content-center">
+        <div class=" col-sm-12 text-center">
+
+            <input type="submit" v-on:click="checkForm" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+
+        </div>
+    </div>
+    <hr />
+
+    <partial name="/Views/Shared/_AuditView.cshtml" />
+
+</form>
+
+
+<div>
+
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'FileUpload',
+                    };
+                }
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.dataModel.filename) {
+                        this.errors.push(" Filename required.");
+                    }
+                    if (!this.dataModel.fileDesription) {
+                        this.errors.push(" File Desription required.");
+                    }
+                    if (!this.dataModel.fileType) {
+                        this.errors.push(" File Type required.");
+                    }
+                    if (!this.dataModel.isPublic) {
+                        this.errors.push(" isPublic required.");
+                    }
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  ,
+
+                SubmitForm: function (e) {
+                    checkForm(e);
+            },
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}

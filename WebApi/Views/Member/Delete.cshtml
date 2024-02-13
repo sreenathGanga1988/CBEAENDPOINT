@@ -1,0 +1,181 @@
+﻿@model DTO.MemberDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <h2 class="form-heading">Delete Member</h2>
+<hr />
+
+    <form asp-action="Delete">
+        <partial name="/Views/Shared/_ErrorBox.cshtml" />
+      
+
+
+            <div class="row justify-content-center">
+
+
+                <div class="form-group col-4">
+                    <label id="lbl_Id" class="control-label">Id</label>
+                </div>
+                <div class=" col-4">
+                    <input id="id" v-model="dataModel.id" class="form-control" type="number" required disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="Name" id="lbl_Name" class="control-label">Name</label>
+                </div>
+                <div class=" col-4">
+                    <input id="Name" name="Name" v-model="dataModel.name" type="text" class="form-control" required disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="StaffNo" id="lbl_StaffNo" class="control-label">Staff No</label>
+                </div>
+                <div class=" col-4">
+                    <input id="StaffNo" name="StaffNo" v-model="dataModel.staffNo" type="text" class="form-control" required disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="GenderId" id="lbl_GenderId" class="control-label">Gender</label>
+                </div>
+                <div class=" col-4">
+
+                    <select name="GenderId" id="GenderId" v-model="dataModel.genderId" class="form-control" required disabled>
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="Dob" id="lbl_Dob" class="control-label">Dob</label>
+                </div>
+                <div class=" col-4">
+                    <input id="Dob" name="Dob" v-model="moment(dataModel.dob).format('YYYY-MM-DD')" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="CategoryId" id="lbl_CategoryId" class="control-label">Category</label>
+                </div>
+                <div class=" col-4">
+                    <input id="CategoryId" name="CategoryId" v-model="dataModel.categoryId" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="DpCode" id="lbl_DpCode" class="control-label">DpCode</label>
+                </div>
+                <div class=" col-4">
+                    <input id="DpCode" name="DpCode" v-model="dataModel.dpCode" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="DesignationId" id="lbl_DesignationId" class="control-label">Designation</label>
+                </div>
+                <div class=" col-4">
+                    <input id="DesignationId" name="DesignationId" v-model="dataModel.designationId" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="Doj" id="lbl_Doj" class="control-label">Date of joining</label>
+                </div>
+                <div class=" col-4">
+                    <input id="Doj" name="Doj" v-model="moment(dataModel.doj).format('YYYY-MM-DD')" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="DojtoScheme" id="lbl_DojtoScheme" class="control-label">Date of joining to Scheme</label>
+                </div>
+                <div class=" col-4">
+                    <input id="DojtoScheme" name="DojtoScheme" v-model="moment(dataModel.dojtoScheme).format('YYYY-MM-DD')" type="text" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-4">
+                    <label for="StatusId" id="lbl_StatusId" class="control-label">Status</label>
+                </div>
+                <div class=" col-4">
+                    <input id="StatusId" name="StatusId" v-model="dataModel.statusId" type="text" class="form-control" required disabled />
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="form-group form-check col-4">
+
+
+                    <input type="checkbox" id="IsRegCompleted" name="IsRegCompleted" v-model="dataModel.isRegCompleted" disabled>
+                    <label for="checkbox">Registration Completed ??</label>
+
+
+                </div>
+
+                <div class="form-group form-check col-4">
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+            <hr />
+
+
+            <div class="row justify-content-center">
+                <div class=" col-sm-12 text-center">
+
+                    <input type="submit" v-on:click="checkForm" value="Delete" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-danger btn-md center-block"> Cancel </a>
+                </div>
+
+
+            </div>
+        <hr />
+            <partial name="/Views/Shared/_AuditView.cshtml" />
+</form>
+
+<div>
+    <a asp-action="Index" class="BacktoList"> &laquo; Back to List</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+        var pageMixin = {
+            created() {
+                this.dataModel = @Json.Serialize(Model);
+            },
+            data: {
+                dataModel: null,
+                errors: [],
+                function() {
+                    return {
+                        appMessage: 'Category',
+                    };
+                }
+            },
+            methods: {
+                 checkForm: function (e) {
+                    this.errors = [];
+                    
+                    if (!this.errors.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                }  , 
+            }
+        };
+
+        mixinArray.push(pageMixin);
+    </script>
+}
