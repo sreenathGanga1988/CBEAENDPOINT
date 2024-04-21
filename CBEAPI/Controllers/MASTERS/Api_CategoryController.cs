@@ -20,6 +20,7 @@ namespace CBEAPI.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [EnableCors]
         // GET: api/Category
         [HttpGet]
         public CustomApiResponse GetCategory()

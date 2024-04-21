@@ -201,7 +201,7 @@ namespace DataAccess.EFCore.Repositories
             {
 
                 String qry = "exec SP_GetFilteredPaginatedData @ReportType='" + ReportType + "', @SearchText='" + SearchText + "'," +
-                    "@Pagenumber=" + PageNumber + ",@pageSize=" + PageNumber + "";
+                    "@Pagenumber=" + PageNumber + ",@pageSize=" + PageSize + "";
 
                 dset = _context.DataSet(qry);
             }

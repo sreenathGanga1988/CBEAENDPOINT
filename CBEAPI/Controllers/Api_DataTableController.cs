@@ -32,17 +32,56 @@ namespace CBEAPI.Controllers
         }
 
 
+        //[HttpGet()]
+        //[Route("GetPageinatedDataAsync")]
+        //public CustomApiResponse GetPageinatedDataAsync(PageParameter pageParameter)
+        //{
+        //    CustomApiResponse response = new CustomApiResponse();
+        //    PaginatedDataResponse paginatedDataResponse = new PaginatedDataResponse();
+        //    paginatedDataResponse.TotalCount = 0;
+        //    try
+        //    {
+
+        //        var items = _unitOfWork.Category.GetFilteredPaginatedData(pageParameter.ReportType, pageParameter.SearchText, pageParameter.PageNumber, pageParameter.PageSize);
+        //        if (items != null)
+        //        {
+        //            if (items.Tables[0] != null)
+        //            {
+        //                paginatedDataResponse.TotalCount = Convert.ToInt16(items.Tables[0].Rows[0]["TotalCount"]);
+        //            }
+
+                    
+        //            // Other Codes Here
+        //            paginatedDataResponse.RowData =items.Tables[1].ToDynamic();
+
+        //        }
+               
+
+
+        //        _resp.SuccessReponse(paginatedDataResponse, ref response);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _resp.ExceptionResponse(ex, ref response);
+        //    }
+        //    return response;
+        //}
+
+
+
+
         [HttpGet()]
         [Route("GetPageinatedDataAsync")]
-        public CustomApiResponse GetPageinatedDataAsync(PageParameter pageParameter)
-        {
+        public CustomApiResponse GetPageinatedDataAsync(String ReportType,String SearchText="",int PageNumber = 0,int PageSize=0)
+       {
             CustomApiResponse response = new CustomApiResponse();
             PaginatedDataResponse paginatedDataResponse = new PaginatedDataResponse();
             paginatedDataResponse.TotalCount = 0;
             try
             {
 
-                var items = _unitOfWork.Category.GetFilteredPaginatedData(pageParameter.ReportType, pageParameter.SearchText, pageParameter.PageNumber, pageParameter.PageSize);
+                var items = _unitOfWork.Category.GetFilteredPaginatedData(ReportType, SearchText, PageSize, PageNumber);
                 if (items != null)
                 {
                     if (items.Tables[0] != null)
@@ -50,12 +89,12 @@ namespace CBEAPI.Controllers
                         paginatedDataResponse.TotalCount = Convert.ToInt16(items.Tables[0].Rows[0]["TotalCount"]);
                     }
 
-                    
+
                     // Other Codes Here
-                    paginatedDataResponse.RowData =items.Tables[1].ToDynamic();
+                    paginatedDataResponse.RowData = items.Tables[1].ToDynamic();
 
                 }
-               
+
 
 
                 _resp.SuccessReponse(paginatedDataResponse, ref response);
@@ -67,6 +106,7 @@ namespace CBEAPI.Controllers
             }
             return response;
         }
+
 
 
         // GET: api/Data
