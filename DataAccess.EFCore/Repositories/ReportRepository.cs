@@ -115,7 +115,25 @@ namespace DataAccess.EFCore.Repositories
 
             return dataTable;
         }
-       
+        public DataSet GetDataSetReport(String sqlstring)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+
+
+                ds = _context.DataSet(sqlstring);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+
+            }
+
+            return ds;
+        }
+
     }
 
 

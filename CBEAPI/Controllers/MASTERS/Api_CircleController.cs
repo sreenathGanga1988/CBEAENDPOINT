@@ -94,7 +94,7 @@ namespace CBEAPI.Controllers
                         if (IsOkToInsert(Circle, ref response))
                         {
 
-                            Circle.CreatedByUserId = int.Parse(CurrentUserID.ToString());
+                            
                             Circle.CreatedDate = DateTime.UtcNow;
                             _unitOfWork.Circle.Add(Circle);
                             _unitOfWork.SaveAllChanges();

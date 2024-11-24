@@ -168,6 +168,7 @@ namespace Domain.Interfaces
         DataTable GetDataReport(String ReportType, string id);
 
         DataTable GetDataReport(String sqlstring);
+        DataSet GetDataSetReport(String sqlstring)
 
     }
 

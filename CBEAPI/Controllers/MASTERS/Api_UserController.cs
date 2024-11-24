@@ -99,7 +99,7 @@ namespace CBEAPI.Controllers
                                 if (IsOkToInsert(User, ref response))
                                 {
 
-                                    User.CreatedByUserId = int.Parse(CurrentUserID.ToString());
+                                   
                                     User.CreatedDate = DateTime.UtcNow;
                                     _unitOfWork.User.Add(User);
                                     _unitOfWork.SaveAllChanges();

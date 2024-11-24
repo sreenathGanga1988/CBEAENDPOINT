@@ -44,7 +44,7 @@ namespace CBEAPI.Controllers
             mainPageModel.Slogan = k.Slogan;
             mainPageModel.LogoImage1 = k.LogoImage1 ;
             mainPageModel.LogoImage2 = k.LogoImage2;
-           
+            mainPageModel.RulesRegulation = k.RulesRegulation;
             var newsitem = _unitOfWork.NewsItem.GetAll().ToList();
             foreach (var item in newsitem. OrderByDescending(u=>u.DateofAction).ThenBy(u=>u.Id).Take(20))
             {
@@ -55,6 +55,20 @@ namespace CBEAPI.Controllers
                 newsModel.NewsLink = item.NewsLink;
                 mainPageModel.newsModels.Add(newsModel);
             }
+
+            mainPageModel.managingComiteeDTOs = new List<ManagingComiteeDTO>();
+            var q = _unitOfWork.ManagingComitee.Find(u => u.IsActive == true).OrderBy(u => u.order);
+            foreach (var item in q)
+            {
+                ManagingComiteeDTO managingComiteeDTO = new ManagingComiteeDTO();
+                managingComiteeDTO.Name = item.Name;
+                managingComiteeDTO.Position = item.Position;
+                managingComiteeDTO.Description1 = item.Description1;
+                managingComiteeDTO.Description2 = item.Description2;
+                managingComiteeDTO.imageLocation = item.imageLocation;
+                mainPageModel.managingComiteeDTOs.Add(managingComiteeDTO);
+            }
+
 
 
             String quote = DateTime.UtcNow.ToString("dddd, dd MMMM yyyy") + " : ";
@@ -76,6 +90,16 @@ namespace CBEAPI.Controllers
             {
                 //   quote = quote + q.DayQuote;
             }
+
+            mainPageModel.ContactDesc1 = k.ContactDesc1;
+            mainPageModel.ContactDesc2 = k.ContactDesc2;
+            mainPageModel.ContactLine1 = k.ContactLine1;
+            mainPageModel.ContactLine2 = k.ContactLine2;
+            mainPageModel.ContactLine3 = k.ContactLine3;
+            mainPageModel.Phonenum = k.Phonenum;
+            mainPageModel.Faxnum = k.Faxnum;
+            mainPageModel.Website = k.Website;
+            mainPageModel.Email = k.Email;
 
             mainPageModel.DayQuote = quote;
             return mainPageModel;

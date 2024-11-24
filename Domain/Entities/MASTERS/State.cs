@@ -15,7 +15,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Abbreviation { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedByUserId { get; set; }
+        public int? CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public int ModifiedByUserId { get; set; }
         public DateTime ModifiedDate { get; set; }

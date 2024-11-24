@@ -94,7 +94,7 @@ namespace CBEAPI.Controllers
                         if (IsOkToInsert(State, ref response))
                         {
 
-                            State.CreatedByUserId = int.Parse(CurrentUserID.ToString());
+                       
                             State.CreatedDate = DateTime.UtcNow;
                             _unitOfWork.State.Add(State);
                             _unitOfWork.SaveAllChanges();

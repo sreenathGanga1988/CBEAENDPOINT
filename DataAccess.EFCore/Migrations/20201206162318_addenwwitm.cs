@@ -64,7 +64,6 @@ namespace DataAccess.EFCore.Migrations
                 table: "ContributionMasters",
                 nullable: true);
 
-
             migrationBuilder.CreateIndex(
                 name: "IX_ContributionMasters_CreatedByUserId",
                 table: "ContributionMasters",
@@ -90,12 +89,10 @@ namespace DataAccess.EFCore.Migrations
                 principalTable: "User",
                 principalColumn: "ID",
                 onDelete: ReferentialAction.Restrict);
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

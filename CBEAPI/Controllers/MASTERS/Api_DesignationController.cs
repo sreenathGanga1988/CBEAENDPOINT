@@ -94,8 +94,9 @@ namespace CBEAPI.Controllers
                         if (IsOkToInsert(Designation, ref response))
                         {
 
-                            Designation.CreatedByUserId = int.Parse(CurrentUserID.ToString());
+                           
                             Designation.CreatedDate = DateTime.UtcNow;
+                            Designation.ModifiedDate = DateTime.UtcNow;
                             _unitOfWork.Designation.Add(Designation);
                             _unitOfWork.SaveAllChanges();
 
@@ -151,6 +152,7 @@ namespace CBEAPI.Controllers
                         {
                             if (IsOkToUpdate(Designation, ref response))
                             {
+                                Designation.ModifiedDate = DateTime.UtcNow;
                                 _unitOfWork.Designation.Update(Designation);
                                 _unitOfWork.SaveAllChanges();
 

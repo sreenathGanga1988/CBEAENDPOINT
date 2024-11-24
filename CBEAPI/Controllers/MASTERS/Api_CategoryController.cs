@@ -95,7 +95,7 @@ namespace CBEAPI.Controllers
                         if (IsOkToInsert(Category, ref response))
                         {
 
-                            Category.CreatedByUserId = int.Parse(CurrentUserID.ToString());
+                          //  Category.CreatedByUserId = int.Parse(CurrentUserID.ToString());
                             Category.CreatedDate = DateTime.UtcNow;
                             _unitOfWork.Category.Add(Category);
                             _unitOfWork.SaveAllChanges();
@@ -151,7 +151,7 @@ namespace CBEAPI.Controllers
                         else
                         {
                             if (IsOkToUpdate(Category, ref response))
-                            {
+                            {Category.ModifiedDate = DateTime.Now;
                                 _unitOfWork.Category.Update(Category);
                                 _unitOfWork.SaveAllChanges();
 

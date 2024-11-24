@@ -9,6 +9,7 @@ using CBEAPI.ViewModels;
 using System.Reflection;
 using static Dapper.SqlMapper;
 using ExtensionMethods;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CBEAPI.Controllers
@@ -23,6 +24,15 @@ namespace CBEAPI.Controllers
         public Api_DataTableController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+        [AllowAnonymous()]
+        [HttpGet()]
+        [Route("GetDummyString")]
+        public String GetDummyString()
+        {
+
+
+            return "Working";
         }
         public string DataTableToJSONWithJSONNet(DataTable table)
         {
@@ -86,7 +96,7 @@ namespace CBEAPI.Controllers
                 {
                     if (items.Tables[0] != null)
                     {
-                        paginatedDataResponse.TotalCount = Convert.ToInt16(items.Tables[0].Rows[0]["TotalCount"]);
+                        paginatedDataResponse.TotalCount = Convert.ToInt32(items.Tables[0].Rows[0]["TotalCount"]);
                     }
 
 
@@ -106,6 +116,181 @@ namespace CBEAPI.Controllers
             }
             return response;
         }
+
+
+
+
+
+
+
+
+
+        [HttpGet()]
+        [Route("GetLookUpDataAsync")]
+        public CustomApiResponse GetLookUpDataAsync(String listType, String SearchTerm = "", String pageNumber = "", String pageSize = "", String selecteditem ="")
+        {
+
+            CustomApiResponse response = new CustomApiResponse();
+            try
+            {
+
+
+                int page = 0;
+                int NOP = 30;
+                if (pageNumber.Trim().Length > 0)
+                {
+                    page = int.Parse(pageNumber);
+                }
+                if (pageNumber.Trim().Length > 0)
+                {
+                    NOP = int.Parse(pageSize);
+                }
+
+                int totalcount = 0;
+               
+                
+                if (page > 0)
+                {
+                    page -= 1;
+                }
+                if (IsUserAuthorized(listType, "GetData", ref response))
+                {
+
+                    if (listType.Trim().ToUpper() == "YEAR")
+                    {
+                        totalcount = _unitOfWork.YearMaster.DataCount(u => u.YearOf.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.YearMaster.GetSelectList(u => u.YearOf.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "MONTH")
+                    {
+                        totalcount = _unitOfWork.Month.DataCount(u => u.MonthName.Contains(SearchTerm));
+                        var data = _unitOfWork.Month.GetSelectList(u => u.MonthName.Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "BRANCH")
+                    {
+                        totalcount = _unitOfWork.Branch.DataCount(u => u.Name.Contains(SearchTerm) || u.DpCode.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Branch.GetSelectList(u => u.Name.Contains(SearchTerm) || u.DpCode.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "CIRCLE")
+                    {
+                        totalcount = _unitOfWork.Circle.DataCount(u => u.Name.Contains(SearchTerm) || u.CircleCode.ToString().Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Circle.GetSelectList(u => u.Name.Contains(SearchTerm) || u.CircleCode.ToString().Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "MEMBER")
+                    {
+                        totalcount = _unitOfWork.Member.DataCount(u => u.StatusId == 3 && (u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm)));
+                        var data = _unitOfWork.Member.GetSelectList(u => (u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm)) && u.StatusId == 3, NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "USERTYPE")
+                    {
+                        totalcount = _unitOfWork.UserType.DataCount(u => u.Abbreviation.Contains(SearchTerm));
+                        var data = _unitOfWork.UserType.GetSelectList(u => u.Abbreviation.Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "CATEGORY")
+                    {
+                        totalcount = _unitOfWork.Category.DataCount(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Category.GetSelectList(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "STATUS")
+                    {
+                        totalcount = _unitOfWork.Status.DataCount(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Status.GetSelectList(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "STATE")
+                    {
+                        totalcount = _unitOfWork.State.DataCount(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.State.GetSelectList(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "DESIGNATION")
+                    {
+                        totalcount = _unitOfWork.Designation.DataCount(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Designation.GetSelectList(u => u.Name.Contains(SearchTerm) || u.Id.ToString().Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "FILEUPLOAD")
+                    {
+                        totalcount = _unitOfWork.FileUploadDetail.DataCount(u => u.Filename.Contains(SearchTerm));
+                        var data = _unitOfWork.FileUploadDetail.GetSelectList(u => u.Filename.Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "REPORT")
+                    {
+                        totalcount = _unitOfWork.MainReport.DataCount(u => u.Name.Contains(SearchTerm));
+                        var data = _unitOfWork.MainReport.GetSelectList(u => u.Name.Contains(SearchTerm), NOP * page, NOP);
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "ALLMEMBER")
+                    {
+                        totalcount = _unitOfWork.Member.DataCount(u => u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Member.GetSelectList(u => (u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm)), NOP * page, NOP);
+
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                    else if (listType.Trim().ToUpper() == "STAFFNO")
+                    {
+                        totalcount = _unitOfWork.Member.DataCount(u => u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm));
+                        var data = _unitOfWork.Member.GetSelectList(u => (u.Name.Contains(SearchTerm) || u.StaffNo.ToString().Contains(SearchTerm)), NOP * page, NOP);
+
+                        var items = new { total_count = totalcount, items = data };
+                        _resp.SuccessReponse(items, ref response);
+                    }
+                }
+                else
+                {
+                    _resp.ActionNotAuthorizedResponse(ref response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _resp.ExceptionResponse(ex, ref response);
+            }
+            return response;
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -31,12 +31,12 @@ namespace DataAccess.EFCore.Repositories
                     user.WrongTryCount = 0;
                     user.LastLoggedTime = DateTime.UtcNow;
 
-                    UserLog userLog = new UserLog();
-                    userLog.ActionTimeUTC = DateTime.UtcNow;
-                    userLog.ActionType = "Login";
-                    userLog.userid = user.Id;
+                    //UserLog userLog = new UserLog();
+                    //userLog.ActionTimeUTC = DateTime.UtcNow;
+                    //userLog.ActionType = "Login";
+                    //userLog.userid = user.Id;
 
-                    _context.UserLogs.Add(userLog);
+                    //_context.UserLogs.Add(userLog);
 
                     isvaliduser = true;
                 }

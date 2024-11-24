@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace CBEAPI.Models
         public MainPageModel()
         {
             newsModels = new List<NewsModel>();
+            managingComiteeDTOs = new List<ManagingComiteeDTO>();
 
             CorouselImage1 = @"/images/CC1.JPEG";
             CorouselImage2 = @"/images/CC2.JPEG";
@@ -25,6 +27,7 @@ namespace CBEAPI.Models
 
 
         public List<NewsModel> newsModels { get; set; }
+        public List<ManagingComiteeDTO> managingComiteeDTOs { get; set; }
 
 
         public String CorouselImage1 { get; set; }
